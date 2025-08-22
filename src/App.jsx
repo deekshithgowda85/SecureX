@@ -14,6 +14,7 @@ function App() {
   return (
     <div className="text-white min-h-screen" style={{ background: 'transparent' }}>
       <Routes>
+         <Route path="/" element={<CyberSecurityNewsPage />} />
         <Route path="/news" element={<CyberSecurityNewsPage />} />
   <Route path="/home" element={<Home />} />
   <Route path="/course" element={<Course />} />
