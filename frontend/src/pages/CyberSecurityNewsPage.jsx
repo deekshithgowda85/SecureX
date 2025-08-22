@@ -3,6 +3,8 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@cl
 import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, Sun, Moon, Menu, X, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import NewsNavbar from '../components/NewsNavbar';
+import { useUser, useClerk } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router-dom';
 
 const CyberSecurityNewsPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -11,6 +13,17 @@ const CyberSecurityNewsPage = () => {
   const [newsData, setNewsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
+  const { isSignedIn } = useUser();
+  const clerk = useClerk();
+  const navigate = useNavigate();
+
+  const handleExploreClick = () => {
+    if (isSignedIn) {
+      navigate('/home');
+    } else {
+      clerk.openSignIn({ afterSignInUrl: '/home', afterSignUpUrl: '/home' });
+    }
+  };
 
   const trendingTopics = [
     "Zero-day exploits",
@@ -187,13 +200,13 @@ const CyberSecurityNewsPage = () => {
               ))}
             </div>
             <div className="flex justify-center">
-              <Link
-                to="/home"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition-colors group"
-              >
-                Explore
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
+               <button
+          onClick={handleExploreClick}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition-colors group"
+        >
+          Explore
+          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+        </button>
             </div>
           </div>
         </div>
