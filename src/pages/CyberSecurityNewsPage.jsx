@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Menu, X, Sun, Moon, AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader } from 'lucide-react';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
+import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, Sun, Moon, Menu, X, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import NewsNavbar from '../components/NewsNavbar';
 
 const CyberSecurityNewsPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -18,16 +20,18 @@ const CyberSecurityNewsPage = () => {
     "IoT threats"
   ];
 
+  // Theme classes for dark/light mode
+  const themeClasses = isDarkMode 
+    ? 'bg-gray-900 text-white' 
+    : 'bg-white text-gray-900';
+
+  // Toggle dark mode
+  const toggleDarkMode = () => setIsDarkMode((v) => !v);
+
   // Function to fetch cybersecurity news
   const fetchCyberSecurityNews = async () => {
     setIsLoading(true);
     try {
-      // In a real application, you would make API calls to news aggregators like:
-      // - NewsAPI with cybersecurity keywords
-      // - RSS feeds from security blogs (Krebs on Security, Threatpost, etc.)
-      // - Security vendor feeds (Symantec, McAfee, etc.)
-      // - Government sources (CISA, NIST)
-      
       const sources = [
         'Cybersecurity & Infrastructure Security Agency (CISA)',
         'Krebs on Security',
@@ -61,7 +65,6 @@ const CyberSecurityNewsPage = () => {
         }
       };
 
-      // Generate dynamic news based on current cybersecurity trends
       const newsTopics = [
         {
           title: "Critical Vulnerability Found in Widely-Used Network Equipment",
@@ -122,9 +125,7 @@ const CyberSecurityNewsPage = () => {
         }));
       };
 
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
       const fetchedNews = generateDynamicNews();
       setNewsData(fetchedNews);
       setLastUpdated(new Date());
@@ -136,150 +137,23 @@ const CyberSecurityNewsPage = () => {
     }
   };
 
-  // Fetch news on component mount
+  // Fetch news on mount
   useEffect(() => {
     fetchCyberSecurityNews();
-    
-    // Set up auto-refresh every 30 minutes
-    const refreshInterval = setInterval(() => {
-      fetchCyberSecurityNews();
-    }, 1800000);
-
-    return () => clearInterval(refreshInterval);
+    // Optionally, set up auto-refresh every 30 minutes:
+    // const interval = setInterval(fetchCyberSecurityNews, 1800000);
+    // return () => clearInterval(interval);
   }, []);
-
-  const handleRefresh = () => {
-    fetchCyberSecurityNews();
-  };
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-  // Clerk handles sign-in/sign-up/sign-out
-
-  const getSeverityColor = (severity) => {
-    switch (severity) {
-      case 'high':
-        return isDarkMode ? 'text-red-400 bg-red-900/20' : 'text-red-600 bg-red-100';
-      case 'medium':
-        return isDarkMode ? 'text-yellow-400 bg-yellow-900/20' : 'text-yellow-600 bg-yellow-100';
-      case 'low':
-        return isDarkMode ? 'text-green-400 bg-green-900/20' : 'text-green-600 bg-green-100';
-      default:
-        return isDarkMode ? 'text-gray-400 bg-gray-800' : 'text-gray-600 bg-gray-100';
-    }
-  };
-
-  const themeClasses = isDarkMode 
-    ? 'bg-gray-900 text-white' 
-    : 'bg-white text-gray-900';
-
-  const cardClasses = isDarkMode 
-    ? 'bg-gray-800 border-gray-700' 
-    : 'bg-white border-gray-200';
 
   return (
     <div className={`min-h-screen transition-all duration-300 ${themeClasses}`}>
       {/* Navigation */}
-      <nav className={`sticky top-0 z-50 border-b backdrop-blur-sm ${
-        isDarkMode 
-          ? 'bg-gray-900/95 border-gray-700' 
-          : 'bg-white/95 border-gray-200'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <Shield className="w-8 h-8 text-blue-500" />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                SecureX
-              </span>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
-              <a href="/home" className={`hover:text-blue-500 transition-colors ${
-                isDarkMode ? 'text-gray-300' : 'text-gray-600'
-              }`}>
-                Home
-              </a>
-              <a href="#" className={`hover:text-blue-500 transition-colors ${
-                isDarkMode ? 'text-gray-300' : 'text-gray-600'
-              }`}>
-                News
-              </a>
-
-              {/* Dark Mode Toggle */}
-              <button
-                onClick={toggleDarkMode}
-                className={`p-2 rounded-lg transition-colors ${
-                  isDarkMode 
-                    ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-
-              {/* Clerk Auth Buttons */}
-              <div className="flex items-center space-x-3">
-                <SignedOut>
-                  <SignInButton mode="modal" afterSignInUrl="/home" afterSignUpUrl="/home" />
-                  <SignUpButton mode="modal" afterSignUpUrl="/home" afterSignInUrl="/home" />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton afterSignOutUrl="/" />
-                </SignedIn>
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className={`md:hidden border-t ${
-            isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'
-          }`}>
-            <div className="px-4 py-3 space-y-3">
-              <a href="/home" className="block py-2">Home</a>
-              <a href="#" className="block py-2">News</a>
-              
-              <div className="flex items-center justify-between py-2">
-                <span>Dark Mode</span>
-                <button
-                  onClick={toggleDarkMode}
-                  className={`p-2 rounded-lg ${
-                    isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
-                  }`}
-                >
-                  {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </button>
-              </div>
-
-              {/* Clerk Auth Buttons for Mobile */}
-              <div className="space-y-2 pt-2">
-                <SignedOut>
-                  <SignInButton mode="modal" afterSignInUrl="/home" afterSignUpUrl="/home" />
-                  <SignUpButton mode="modal" afterSignUpUrl="/home" afterSignInUrl="/home" />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton afterSignOutUrl="/home" />
-                </SignedIn>
-              </div>
-            </div>
-          </div>
-        )}
-      </nav>
-
+      <NewsNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        isMobileMenuOpen={isMobileMenuOpen}
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+      />
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className={`absolute inset-0 ${
@@ -297,7 +171,7 @@ const CyberSecurityNewsPage = () => {
             }`}>
               Stay ahead of emerging threats with real-time cybersecurity news, analysis, and expert insights
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 mb-8">
               {trendingTopics.map((topic, index) => (
                 <span
                   key={index}
@@ -311,6 +185,15 @@ const CyberSecurityNewsPage = () => {
                   {topic}
                 </span>
               ))}
+            </div>
+            <div className="flex justify-center">
+              <Link
+                to="/home"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition-colors group"
+              >
+                Explore
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
         </div>
@@ -327,7 +210,7 @@ const CyberSecurityNewsPage = () => {
               </span>
             )}
             <button
-              onClick={handleRefresh}
+              onClick={fetchCyberSecurityNews}
               disabled={isLoading}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
                 isDarkMode 
@@ -368,7 +251,7 @@ const CyberSecurityNewsPage = () => {
               Unable to fetch news at the moment
             </p>
             <button
-              onClick={handleRefresh}
+              onClick={fetchCyberSecurityNews}
               className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               Try Again
@@ -379,15 +262,15 @@ const CyberSecurityNewsPage = () => {
             {newsData.map((news) => (
               <article
                 key={news.id}
-                className={`rounded-xl border p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer ${cardClasses}`}
+                className={`rounded-xl border p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
                 onClick={() => window.open(news.url, '_blank')}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-2 rounded-lg ${getSeverityColor(news.severity)}`}>
+                  <div className={`p-2 rounded-lg ${news.severity === 'high' ? (isDarkMode ? 'text-red-400 bg-red-900/20' : 'text-red-600 bg-red-100') : news.severity === 'medium' ? (isDarkMode ? 'text-yellow-400 bg-yellow-900/20' : 'text-yellow-600 bg-yellow-100') : (isDarkMode ? 'text-green-400 bg-green-900/20' : 'text-green-600 bg-green-100')}`}>
                     {news.icon}
                   </div>
                   <div className="text-right">
-                    <div className={`text-xs font-medium px-2 py-1 rounded mb-1 ${getSeverityColor(news.severity)}`}>
+                    <div className={`text-xs font-medium px-2 py-1 rounded mb-1 ${news.severity === 'high' ? (isDarkMode ? 'text-red-400 bg-red-900/20' : 'text-red-600 bg-red-100') : news.severity === 'medium' ? (isDarkMode ? 'text-yellow-400 bg-yellow-900/20' : 'text-yellow-600 bg-yellow-100') : (isDarkMode ? 'text-green-400 bg-green-900/20' : 'text-green-600 bg-green-100')}`}>
                       {news.category}
                     </div>
                     {news.source && (
@@ -431,7 +314,7 @@ const CyberSecurityNewsPage = () => {
         {!isLoading && newsData.length > 0 && (
           <div className="text-center mt-12">
             <button 
-              onClick={handleRefresh}
+              onClick={fetchCyberSecurityNews}
               className={`px-8 py-3 rounded-lg font-medium transition-all hover:scale-105 ${
                 isDarkMode 
                   ? 'bg-gray-800 text-white hover:bg-gray-700 border border-gray-700' 

@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { Shield } from 'lucide-react';
 import React, { useState } from 'react'
 import {
   SignedIn,
@@ -10,8 +11,8 @@ import {
 
 const navItems = [
   { label: 'Dashboard', href: '/home' },
-  { label: 'Products', href: '/projects' },
-  { label: 'Skills', href: '/skill' },
+  { label: 'Products', href: '/products' },
+  { label: 'Courses', href: '/course' },
   { label: 'Profile', href: '/profile' }
 ]
 
@@ -24,7 +25,12 @@ function Navbar() {
   return (
     <header className="w-full shadow-md bg-white">
       <nav className="max-w-6xl mx-auto flex justify-between items-center px-4 py-3">
-  <div className="text-2xl font-bold text-black">SecureX</div>
+  <Link to="/news" className="flex items-center space-x-3 group focus:outline-none">
+    <Shield className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-transform" />
+    <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:underline">
+      SecureX
+    </span>
+  </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex space-x-6 items-center">
