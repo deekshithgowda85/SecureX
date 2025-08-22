@@ -11,7 +11,7 @@ function Home() {
       <Navbar />
       <div className="max-w-4xl mx-auto py-16 px-4">
         <h1 className="text-4xl font-bold text-blue-700 mb-4">Welcome to SecureX Home</h1>
-        <p className="text-lg text-gray-700 mb-8">This is your dashboard. Explore the latest cybersecurity news, resources, and more.</p>
+        <p className="text-lg text-gray-600 mb-8">This is your dashboard. Explore the latest cybersecurity news, resources, and more.</p>
         {isLoaded && isSignedIn && user && (
           <div className="bg-blue-50 border border-blue-100 rounded-lg p-6 mb-8">
             <h2 className="text-2xl font-semibold text-blue-700 mb-2">Your Profile</h2>
