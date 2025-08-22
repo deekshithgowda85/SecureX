@@ -11,7 +11,11 @@ function App() {
       <Routes>
         <Route path="/" element={<CyberSecurityNewsPage />} />
         <Route path="/home" element={<Home />} />
+      
       </Routes>
+      <div>
+        hi therer 
+      </div>
     </div>
   );
 }
