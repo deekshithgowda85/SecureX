@@ -1,13 +1,12 @@
-
-import React from 'react';
-import Navbar from '../../components/Navbar';
+import React from 'react'
+import Navbar from '../../components/Navbar'
 import { useUser } from '@clerk/clerk-react';
 
-function Home() {
-  const { isLoaded, isSignedIn, user } = useUser();
 
+function Profile() {
+    const { isLoaded, isSignedIn, user } = useUser();
   return (
-    <div className="min-h-screen bg-white">
+  <div className="min-h-screen bg-white">
       <Navbar />
       <div className="max-w-4xl mx-auto py-16 px-4">
         <h1 className="text-4xl font-bold text-blue-700 mb-4">Welcome to SecureX Home</h1>
@@ -33,4 +32,4 @@ function Home() {
   );
 }
 
-export default Home
+export default Profile
