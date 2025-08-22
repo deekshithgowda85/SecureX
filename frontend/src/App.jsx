@@ -9,14 +9,17 @@ import Course from './pages/home/Course.jsx';
 import Products from './pages/home/Products.jsx';
 import Profile from './pages/home/Profile.jsx';
 import Chatbot from './components/Chatbot.jsx'
+import Navbar from './components/Navbar.jsx';
 
 function App() {
   return (
     <div>
        <Chatbot/>
+        
         <div className="text-white min-h-screen" style={{ background: 'transparent' }}>
      
      <Routes>
+        
          <Route path="/" element={<CyberSecurityNewsPage />} />
          <Route path="/news" element={<CyberSecurityNewsPage />} />
          <Route path="/home" element={<Home />} />
