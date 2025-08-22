@@ -30,6 +30,7 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.6.3",
     "remark-gfm": "^4.0.1",
+    "rss-parser": "^3.13.0",
     "shadcn": "^2.10.0",
     "three": "^0.167.1"
   },

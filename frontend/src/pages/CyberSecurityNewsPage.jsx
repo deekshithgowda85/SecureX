@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, ArrowRight } from 'lucide-react';
-import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import NewsNavbar from '../components/NewsNavbar';
+import Parser from 'rss-parser';
 
 const CyberSecurityNewsPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -10,71 +10,75 @@ const CyberSecurityNewsPage = () => {
   const [newsData, setNewsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
-
+  const navigate  = useNavigate();
   const trendingTopics = ["Zero-day exploits", "AI Security", "Ransomware", "Cloud vulnerabilities", "IoT threats"];
 
   const themeClasses = isDarkMode ? 'bg-black text-white' : 'bg-white text-black';
   const toggleDarkMode = () => setIsDarkMode(v => !v);
 
   const handleExploreClick = () => {
-    // Original business logic would be here
-    console.log('Explore clicked - business logic preserved');
+    navigate("/guide")
   };
 
+  // 🔹 Fetch Live Hacker News RSS
   const fetchCyberSecurityNews = async () => {
     setIsLoading(true);
     try {
-      const sources = ['CISA', 'Krebs on Security', 'Dark Reading', 'SC Media', 'Threatpost', 'SecurityWeek', 'The Hacker News', 'Bleeping Computer'];
-      const generateTimestamp = () => ['2 hours ago', '4 hours ago', '6 hours ago', '8 hours ago', '12 hours ago', '1 day ago', '2 days ago'][Math.floor(Math.random() * 7)];
-      
-      const renderIcon = iconType => {
-        const iconClass = "w-5 h-5";
-        switch (iconType) {
-          case 'alert': return <AlertTriangle className={iconClass} />;
-          case 'bug': return <Bug className={iconClass} />;
-          case 'lock': return <Lock className={iconClass} />;
-          case 'zap': return <Zap className={iconClass} />;
-          case 'shield': return <Shield className={iconClass} />;
-          default: return <AlertTriangle className={iconClass} />;
-        }
-      };
+      // 1. Get top story IDs
+      const response = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
+      const storyIds = await response.json();
+      console.log(response);
+      // 2. Limit to top 10 stories
+      const top10 = storyIds.slice(0, 10);
+  
+      // 3. Fetch details for each story
+      const stories = await Promise.all(
+        top10.map(id =>
+          fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(res => res.json())
+        )
+      );
+  
+      const generateTimestamp = () =>
+        ["2 hours ago", "4 hours ago", "6 hours ago", "8 hours ago", "12 hours ago", "1 day ago", "2 days ago"][
+          Math.floor(Math.random() * 7)
+        ];
 
-      const newsTopics = [
-        { title: "Critical Vulnerability Found in Widely-Used Network Equipment", summary: "Security researchers discovered a remote code execution flaw affecting enterprise networking hardware.", category: "Critical Alert", severity: "high", iconType: "alert" },
-        { title: "Sophisticated Phishing Campaign Targets Financial Institutions", summary: "AI-generated content and deepfake technology bypass email security.", category: "Data Breach", severity: "high", iconType: "bug" },
-        { title: "New Ransomware-as-a-Service Platform Emerges", summary: "Advanced ransomware operation offering encryption and evasion.", category: "Malware", severity: "high", iconType: "alert" },
-        { title: "Zero Trust Architecture Adoption Reaches 65%", summary: "Growth in zero trust implementation driven by remote work security concerns.", category: "Technology", severity: "medium", iconType: "shield" },
-        { title: "Supply Chain Attack Compromises Dev Tools", summary: "Malicious actors infiltrated developer repositories.", category: "Critical Alert", severity: "high", iconType: "alert" },
-        { title: "Quantum Computing Threat Timeline Accelerates", summary: "Quantum computers capable of breaking encryption could arrive sooner.", category: "Standards", severity: "medium", iconType: "lock" }
-      ];
-
-      const generateDynamicNews = () => newsTopics.map((topic, index) => ({
-        id: index + 1,
-        title: topic.title,
-        summary: topic.summary,
-        category: topic.category,
-        severity: topic.severity,
+        const truncateText = (text, maxLength = 120) => {
+          if (!text) return "No summary available";
+          return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+        };
+        
+  
+      // 4. Map to your news format
+      const mappedNews = stories.map((item, index) => ({
+        id: item.id || index + 1,
+        title: item.title || "No title",
+        summary: truncateText(
+    item.text ? item.text.replace(/<[^>]+>/g, "") : "No summary available"
+  ), 
+        category: "Tech News",
+        severity: "medium",
         timestamp: generateTimestamp(),
         readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
-        source: sources[Math.floor(Math.random() * sources.length)],
-        icon: renderIcon(topic.iconType),
-        url: `#news-${index + 1}`
+        source: "Hacker News",
+        icon: <AlertTriangle className="w-5 h-5" />,
+        url: item.url || `https://news.ycombinator.com/item?id=${item.id}`
       }));
-
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setNewsData(generateDynamicNews());
+  
+      setNewsData(mappedNews);
       setLastUpdated(new Date());
     } catch (e) {
-      console.error(e);
+      console.error("Error fetching Hacker News:", e);
       setNewsData([]);
     } finally {
       setIsLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchCyberSecurityNews();
   }, []);
+  
 
   return (
     <div className={`min-h-screen transition-all duration-300 ${themeClasses}`}>

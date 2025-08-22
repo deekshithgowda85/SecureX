@@ -10,6 +10,7 @@ import Products from './pages/home/Products.jsx';
 import Profile from './pages/home/Profile.jsx';
 import Chatbot from './components/Chatbot.jsx'
 import Navbar from './components/Navbar.jsx';
+import CyberSafeLanding from './components/LandingPage.jsx';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
      
      <Routes>
         
-         <Route path="/" element={<CyberSecurityNewsPage />} />
+         <Route path="/" element={<CyberSafeLanding />} />
          <Route path="/news" element={<CyberSecurityNewsPage />} />
          <Route path="/home" element={<Home />} />
          <Route path="/course" element={<Course />} />
