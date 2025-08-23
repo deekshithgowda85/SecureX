@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- Add this import
 import NewsNavbar from '../../components/NewsNavbar';
 import CybersecurityTradingHero from '../../components/Homelanding';
 import CircularGallery from '../../components/Components/CircularGallery/CircularGallery';
@@ -13,7 +14,7 @@ import vulnerabilityImg from '../../assets/img7.jpeg';
 import phishingImg from '../../assets/img8.jpeg';
 import siemImg from '../../assets/img9.jpeg';
 import encryptionImg from '../../assets/img10.jpeg';
-import Footer from '../../components/Footer'; // <-- Fix the import
+import Footer from '../../components/Footer';
 
 const galleryItems = [
   { image: firewallImg, text: 'Firewall Protection' },
@@ -34,6 +35,7 @@ const Home = () => {
   const bottomLeftCardRef = useRef(null);
   const bottomRightCardsRef = useRef(null);
   const floatingElementsRef = useRef([]);
+  const navigate = useNavigate(); // <-- Add this line
 
   useEffect(() => {
     // Import GSAP
@@ -433,10 +435,16 @@ const Home = () => {
             Join elite cybersecurity professionals in advanced threat detection and digital defense strategies
           </p>
           <div className="flex items-center space-x-4 mb-12 pointer-events-auto">
-            <button className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
+            <button
+              className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+              onClick={() => navigate('/quiz')}
+            >
               Start Training
             </button>
-            <button className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
+            <button
+              className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+              onClick={() => navigate('/dashboard')}
+            >
               Explore
             </button>
           </div>
@@ -470,7 +478,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <Footer /> {/* <-- Add Footer component here */}
+      <Footer />
     </>
   );
 };
