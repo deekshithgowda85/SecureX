@@ -1,6 +1,8 @@
 // src/pages/QuizzesPage.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { saveQuizResult } from "../features/quizSlice";
 
 // Beautiful Cyber Loader Component
 const CyberLoader = () => {
@@ -93,16 +95,31 @@ const QuizzesPage = () => {
     }
   };
 
-  const handleSubmitQuiz = () => {
-    let correctAnswers = 0;
-    quizData.forEach((q, index) => {
-      if (answers[index] === q.answer) {
-        correctAnswers++;
-      }
-    });
-    setScore(correctAnswers);
-    setShowResults(true);
-  };
+  const dispatch = useDispatch();
+
+const handleSubmitQuiz = () => {
+  let correctAnswers = 0;
+  quizData.forEach((q, index) => {
+    if (answers[index] === q.answer) {
+      correctAnswers++;
+    }
+  });
+
+  setScore(correctAnswers);
+  setShowResults(true);
+
+  // ✅ Save result in Redux
+  dispatch(
+    saveQuizResult({
+      topic,
+      score: correctAnswers,
+      total: quizData.length,
+      answers,
+      timestamp: new Date().toISOString(),
+    })
+  );
+};
+
 
   const resetQuiz = () => {
     setAnswers({});
