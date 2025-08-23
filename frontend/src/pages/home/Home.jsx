@@ -3,20 +3,28 @@ import NewsNavbar from '../../components/NewsNavbar';
 import CybersecurityTradingHero from '../../components/Homelanding';
 import CircularGallery from '../../components/Components/CircularGallery/CircularGallery';
 import { Check, ArrowRight, Shield, Lock, Users, Globe } from 'lucide-react';
+import firewallImg from '../../assets/img1.jpg';
+import threatImg from '../../assets/img2.jpeg';
+import networkImg from '../../assets/img3.jpeg';
+import incidentImg from '../../assets/img4.jpg';
+import penetrationImg from '../../assets/img5.jpeg';
+import cloudImg from '../../assets/img6.jpeg';
+import vulnerabilityImg from '../../assets/img7.jpeg';
+import phishingImg from '../../assets/img8.jpeg';
+import siemImg from '../../assets/img9.jpeg';
+import encryptionImg from '../../assets/img10.jpeg';
 
 const galleryItems = [
-  { image: 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=800&q=80', text: 'Firewall Protection' },
-  { image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80', text: 'Network Monitoring' },
-  { image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', text: 'Threat Intelligence' },
-  { image: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=800&q=80', text: 'Data Encryption' },
-  { image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80', text: 'Incident Response' },
-  { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80', text: 'Penetration Testing' },
-  { image: 'https://images.unsplash.com/photo-1463438690606-f6778b8c1d10?auto=format&fit=crop&w=800&q=80', text: 'Security Awareness' },
-  { image: 'https://images.unsplash.com/photo-1461344577544-4e5dc9487184?auto=format&fit=crop&w=800&q=80', text: 'Cloud Security' },
-  { image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80', text: 'Vulnerability Scanning' },
-  { image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80', text: 'Multi-factor Authentication' },
-  { image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=800&q=80', text: 'Phishing Protection' },
-  { image: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80', text: 'SIEM Integration' },
+  { image: firewallImg, text: 'Firewall Protection' },
+  { image: networkImg, text: 'Network Monitoring' },
+  { image: threatImg, text: 'Threat Intelligence' },
+  { image: encryptionImg, text: 'Data Encryption' },
+  { image: incidentImg, text: 'Incident Response' },
+  { image: penetrationImg, text: 'Penetration Testing' },
+  { image: cloudImg, text: 'Cloud Security' },
+  { image: vulnerabilityImg, text: 'Vulnerability Scanning' },
+  { image: phishingImg, text: 'Phishing Protection' },
+  { image: siemImg, text: 'SIEM Integration' },
 ];
 
 const Home = () => {
