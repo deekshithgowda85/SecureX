@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
-import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, Sun, Moon, Menu, X, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import NewsNavbar from '../components/NewsNavbar';
+import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Shield, RefreshCw, Loader, ArrowRight } from 'lucide-react';
 import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
+import NewsNavbar from '../components/NewsNavbar';
 
 const CyberSecurityNewsPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // Clerk handles sign-in state
   const [newsData, setNewsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -33,20 +30,14 @@ const CyberSecurityNewsPage = () => {
     "IoT threats"
   ];
 
-  // Theme classes for dark/light mode
-  const themeClasses = isDarkMode 
-    ? 'bg-gray-900 text-white' 
-    : 'bg-white text-gray-900';
-
-  // Toggle dark mode
+  const themeClasses = isDarkMode ? 'bg-black text-white' : 'bg-white text-black';
   const toggleDarkMode = () => setIsDarkMode((v) => !v);
 
-  // Function to fetch cybersecurity news
   const fetchCyberSecurityNews = async () => {
     setIsLoading(true);
     try {
       const sources = [
-        'Cybersecurity & Infrastructure Security Agency (CISA)',
+        'CISA',
         'Krebs on Security',
         'Dark Reading',
         'SC Media',
@@ -57,215 +48,129 @@ const CyberSecurityNewsPage = () => {
       ];
 
       const generateTimestamp = () => {
-        const timeOptions = ['2 hours ago', '4 hours ago', '6 hours ago', '8 hours ago', '12 hours ago', '1 day ago', '2 days ago'];
-        return timeOptions[Math.floor(Math.random() * timeOptions.length)];
+        const options = ['2 hours ago', '4 hours ago', '6 hours ago', '1 day ago'];
+        return options[Math.floor(Math.random() * options.length)];
       };
 
-      const renderIcon = (iconType) => {
-        switch(iconType) {
-          case 'alert':
-            return React.createElement(AlertTriangle, { className: "w-5 h-5" });
-          case 'bug':
-            return React.createElement(Bug, { className: "w-5 h-5" });
-          case 'lock':
-            return React.createElement(Lock, { className: "w-5 h-5" });
-          case 'zap':
-            return React.createElement(Zap, { className: "w-5 h-5" });
-          case 'shield':
-            return React.createElement(Shield, { className: "w-5 h-5" });
-          default:
-            return React.createElement(AlertTriangle, { className: "w-5 h-5" });
-        }
+      const icons = {
+        alert: AlertTriangle,
+        bug: Bug,
+        lock: Lock,
+        shield: Shield
       };
 
-      const newsTopics = [
-        {
-          title: "Critical Vulnerability Found in Widely-Used Network Equipment",
-          summary: "Security researchers discovered a remote code execution flaw affecting enterprise networking hardware from a major vendor.",
-          category: "Critical Alert",
-          severity: "high",
-          iconType: "alert"
-        },
-        {
-          title: "Sophisticated Phishing Campaign Targets Financial Institutions",
-          summary: "Cybercriminals using AI-generated content and deepfake technology to bypass traditional email security measures.",
-          category: "Data Breach",
-          severity: "high",
-          iconType: "bug"
-        },
-        {
-          title: "New Ransomware-as-a-Service Platform Emerges on Dark Web",
-          summary: "Security analysts identify a new ransomware operation offering advanced encryption and evasion capabilities to affiliates.",
-          category: "Malware",
-          severity: "high",
-          iconType: "alert"
-        },
-        {
-          title: "Zero Trust Architecture Adoption Reaches 65% Among Enterprises",
-          summary: "Latest industry survey shows significant growth in zero trust implementation driven by remote work security concerns.",
-          category: "Technology",
-          severity: "medium",
-          iconType: "shield"
-        },
-        {
-          title: "Supply Chain Attack Compromises Popular Software Development Tools",
-          summary: "Malicious actors infiltrated developer repositories affecting thousands of downstream applications and services.",
-          category: "Critical Alert",
-          severity: "high",
-          iconType: "alert"
-        },
-        {
-          title: "Quantum Computing Threat Timeline Accelerates According to New Research",
-          summary: "Scientists project quantum computers capable of breaking current encryption standards could arrive sooner than expected.",
-          category: "Standards",
-          severity: "medium",
-          iconType: "lock"
-        }
+      const topics = [
+        { title: "Critical Vulnerability Found in Networking Equipment", summary: "Remote code execution flaw discovered.", category: "Critical Alert", severity: "high", iconType: "alert" },
+        { title: "Sophisticated Phishing Campaign Hits Banks", summary: "AI-generated phishing bypasses detection.", category: "Data Breach", severity: "high", iconType: "bug" },
+        { title: "New Ransomware-as-a-Service Emerges", summary: "Advanced ransomware offered on dark web.", category: "Malware", severity: "high", iconType: "alert" },
+        { title: "Zero Trust Adoption Reaches 65%", summary: "Growth driven by remote work security.", category: "Technology", severity: "medium", iconType: "shield" },
+        { title: "Supply Chain Attack Compromises Dev Tools", summary: "Thousands of apps affected.", category: "Critical Alert", severity: "high", iconType: "alert" },
+        { title: "Quantum Threat Timeline Accelerates", summary: "Encryption break may come sooner.", category: "Standards", severity: "medium", iconType: "lock" }
       ];
 
-      const generateDynamicNews = () => {
-        return newsTopics.map((topic, index) => ({
-          id: index + 1,
-          title: topic.title,
-          summary: topic.summary,
-          category: topic.category,
-          severity: topic.severity,
-          timestamp: generateTimestamp(),
-          readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
-          source: sources[Math.floor(Math.random() * sources.length)],
-          icon: renderIcon(topic.iconType),
-          url: `#news-${index + 1}`
-        }));
-      };
+      const generated = topics.map((t, i) => ({
+        id: i + 1,
+        title: t.title,
+        summary: t.summary,
+        category: t.category,
+        severity: t.severity,
+        timestamp: generateTimestamp(),
+        readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
+        source: sources[Math.floor(Math.random() * sources.length)],
+        icon: React.createElement(icons[t.iconType] || AlertTriangle, { className: "w-5 h-5" }),
+        url: `#news-${i + 1}`
+      }));
 
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      const fetchedNews = generateDynamicNews();
-      setNewsData(fetchedNews);
+      await new Promise(r => setTimeout(r, 1000));
+      setNewsData(generated);
       setLastUpdated(new Date());
-    } catch (error) {
-      console.error('Error fetching news:', error);
+    } catch (e) {
+      console.error(e);
       setNewsData([]);
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Fetch news on mount
   useEffect(() => {
     fetchCyberSecurityNews();
-    // Optionally, set up auto-refresh every 30 minutes:
-    // const interval = setInterval(fetchCyberSecurityNews, 1800000);
-    // return () => clearInterval(interval);
   }, []);
 
   return (
     <div className={`min-h-screen transition-all duration-300 ${themeClasses}`}>
-      {/* Navigation */}
       <NewsNavbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
-      {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className={`absolute inset-0 ${
-          isDarkMode 
-            ? 'bg-gradient-to-br from-blue-900/20 via-purple-900/20 to-red-900/20' 
-            : 'bg-gradient-to-br from-blue-50 via-purple-50 to-red-50'
-        }`} />
-        <div className="relative max-w-7xl mx-auto px-4 py-16">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 bg-clip-text text-transparent">
-              Cybersecurity Intelligence
-            </h1>
-            <p className={`text-xl mb-8 max-w-3xl mx-auto ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
-            }`}>
-              Stay ahead of emerging threats with real-time cybersecurity news, analysis, and expert insights
-            </p>
-            <div className="flex flex-wrap justify-center gap-3 mb-8">
-              {trendingTopics.map((topic, index) => (
-                <span
-                  key={index}
-                  className={`px-4 py-2 rounded-full text-sm font-medium ${
-                    isDarkMode 
-                      ? 'bg-gray-800 text-gray-300' 
-                      : 'bg-gray-100 text-gray-700'
-                  }`}
-                >
-                  <TrendingUp className="w-4 h-4 inline mr-2" />
-                  {topic}
-                </span>
-              ))}
-            </div>
-            <div className="flex justify-center">
-               <button
-          onClick={handleExploreClick}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition-colors group"
-        >
-          Explore
-          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-        </button>
-            </div>
+
+      {/* Hero */}
+      <div className="relative">
+        <div className="relative max-w-7xl mx-auto px-4 py-16 text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            Cybersecurity Intelligence
+          </h1>
+          <p className="text-xl mb-8 max-w-3xl mx-auto">
+            Stay ahead of emerging threats with real-time cybersecurity news and insights
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            {trendingTopics.map((topic, i) => (
+              <span
+                key={i}
+                className={`px-4 py-2 rounded-full text-sm font-medium border ${isDarkMode ? 'border-white' : 'border-black'}`}
+              >
+                <TrendingUp className="w-4 h-4 inline mr-2" />
+                {topic}
+              </span>
+            ))}
           </div>
+
+          <button
+            onClick={handleExploreClick}
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg text-lg font-semibold shadow transition-colors group
+              ${isDarkMode ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'}`}
+          >
+            Explore
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
       </div>
 
-      {/* News Grid */}
+      {/* News */}
       <main className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-3xl font-bold">Latest Threats & News</h2>
           <div className="flex items-center space-x-4">
             {lastUpdated && (
-              <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
+              <span className="text-sm">
                 Last updated: {lastUpdated.toLocaleTimeString()}
               </span>
             )}
             <button
               onClick={fetchCyberSecurityNews}
               disabled={isLoading}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                isDarkMode 
-                  ? 'bg-gray-800 text-gray-300 hover:bg-gray-700' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              className={`flex items-center space-x-2 px-4 py-2 rounded-lg border ${isDarkMode ? 'border-white' : 'border-black'} ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
-            <div className={`px-4 py-2 rounded-lg ${
-              isDarkMode 
-                ? 'bg-green-900/20 text-green-400' 
-                : 'bg-green-100 text-green-700'
-            }`}>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium">Live Updates</span>
-              </div>
-            </div>
           </div>
         </div>
 
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <Loader className="w-12 h-12 animate-spin text-blue-500 mb-4" />
-            <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Fetching latest cybersecurity news...
-            </p>
-            <p className={`text-sm mt-2 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-              Aggregating from trusted security sources
-            </p>
+            <Loader className="w-12 h-12 animate-spin mb-4" />
+            <p className="text-lg">Fetching latest cybersecurity news...</p>
           </div>
         ) : newsData.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <AlertTriangle className="w-12 h-12 text-yellow-500 mb-4" />
-            <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Unable to fetch news at the moment
-            </p>
+            <AlertTriangle className="w-12 h-12 mb-4" />
+            <p className="text-lg">Unable to fetch news at the moment</p>
             <button
               onClick={fetchCyberSecurityNews}
-              className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className={`mt-4 px-6 py-2 rounded-lg border ${isDarkMode ? 'border-white' : 'border-black'}`}
             >
               Try Again
             </button>
@@ -275,21 +180,19 @@ const CyberSecurityNewsPage = () => {
             {newsData.map((news) => (
               <article
                 key={news.id}
-                className={`rounded-xl border p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer ${isDarkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+                className={`rounded-xl border p-6 transition-all duration-300 hover:shadow-lg hover:scale-105 cursor-pointer ${isDarkMode ? 'bg-black border-white text-white' : 'bg-white border-black text-black'}`}
                 onClick={() => window.open(news.url, '_blank')}
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-2 rounded-lg ${news.severity === 'high' ? (isDarkMode ? 'text-red-400 bg-red-900/20' : 'text-red-600 bg-red-100') : news.severity === 'medium' ? (isDarkMode ? 'text-yellow-400 bg-yellow-900/20' : 'text-yellow-600 bg-yellow-100') : (isDarkMode ? 'text-green-400 bg-green-900/20' : 'text-green-600 bg-green-100')}`}>
+                  <div className={`p-2 border rounded-lg ${isDarkMode ? 'border-white' : 'border-black'}`}>
                     {news.icon}
                   </div>
                   <div className="text-right">
-                    <div className={`text-xs font-medium px-2 py-1 rounded mb-1 ${news.severity === 'high' ? (isDarkMode ? 'text-red-400 bg-red-900/20' : 'text-red-600 bg-red-100') : news.severity === 'medium' ? (isDarkMode ? 'text-yellow-400 bg-yellow-900/20' : 'text-yellow-600 bg-yellow-100') : (isDarkMode ? 'text-green-400 bg-green-900/20' : 'text-green-600 bg-green-100')}`}>
+                    <div className="text-xs font-medium border px-2 py-1 rounded mb-1">
                       {news.category}
                     </div>
                     {news.source && (
-                      <div className={`text-xs ${isDarkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                        {news.source}
-                      </div>
+                      <div className="text-xs opacity-70">{news.source}</div>
                     )}
                   </div>
                 </div>
@@ -298,22 +201,16 @@ const CyberSecurityNewsPage = () => {
                   {news.title}
                 </h3>
 
-                <p className={`text-sm mb-4 line-clamp-3 ${
-                  isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                }`}>
+                <p className="text-sm mb-4 line-clamp-3 opacity-80">
                   {news.summary}
                 </p>
 
-                <div className="flex items-center justify-between text-sm">
-                  <div className={`flex items-center space-x-2 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                  }`}>
+                <div className="flex items-center justify-between text-sm opacity-70">
+                  <div className="flex items-center space-x-2">
                     <Clock className="w-4 h-4" />
                     <span>{news.timestamp}</span>
                   </div>
-                  <div className={`flex items-center space-x-2 ${
-                    isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                  }`}>
+                  <div className="flex items-center space-x-2">
                     <span>{news.readTime}</span>
                     <ExternalLink className="w-4 h-4" />
                   </div>
@@ -322,39 +219,17 @@ const CyberSecurityNewsPage = () => {
             ))}
           </div>
         )}
-
-        {/* Load More Button */}
-        {!isLoading && newsData.length > 0 && (
-          <div className="text-center mt-12">
-            <button 
-              onClick={fetchCyberSecurityNews}
-              className={`px-8 py-3 rounded-lg font-medium transition-all hover:scale-105 ${
-                isDarkMode 
-                  ? 'bg-gray-800 text-white hover:bg-gray-700 border border-gray-700' 
-                  : 'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200'
-              }`}
-            >
-              Load More News
-            </button>
-          </div>
-        )}
       </main>
 
       {/* Footer */}
-      <footer className={`border-t mt-16 ${
-        isDarkMode ? 'border-gray-800 bg-gray-900' : 'border-gray-200 bg-gray-50'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <Shield className="w-6 h-6 text-blue-500" />
-              <span className="font-semibold">CyberWatch</span>
-            </div>
-            <div className={`text-sm ${
-              isDarkMode ? 'text-gray-400' : 'text-gray-600'
-            }`}>
-              © 2025 CyberWatch. Stay secure, stay informed.
-            </div>
+      <footer className={`border-t mt-16 ${isDarkMode ? 'border-white bg-black' : 'border-black bg-white'}`}>
+        <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center space-x-3 mb-4 md:mb-0">
+            <Shield className="w-6 h-6" />
+            <span className="font-semibold">CyberWatch</span>
+          </div>
+          <div className="text-sm opacity-70">
+            © 2025 CyberWatch. Stay secure, stay informed.
           </div>
         </div>
       </footer>

@@ -4,30 +4,38 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@cl
 
 const NewsNavbar = ({ isDarkMode, toggleDarkMode, isMobileMenuOpen, setIsMobileMenuOpen }) => {
   return (
-    <nav className={`sticky top-0 z-50 border-b backdrop-blur-sm ${
+    <nav className={`sticky top-0 z-50 border-b backdrop-blur-sm transition-all duration-300 ${
       isDarkMode 
-        ? 'bg-gray-900/95 border-gray-700' 
-        : 'bg-white/95 border-gray-200'
+        ? 'bg-black/95 border-white/20' 
+        : 'bg-white/95 border-black/20'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <a href="/news" className="flex items-center space-x-3 group">
-            <Shield className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-transform" />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:underline">
+            <Shield className={`w-8 h-8 transition-all duration-300 ${
+              isDarkMode ? 'text-white' : 'text-black'
+            } group-hover:scale-110`} />
+            <span className={`text-xl font-bold transition-all duration-300 ${
+              isDarkMode ? 'text-white' : 'text-black'
+            } group-hover:tracking-wider`}>
               SecureX
             </span>
           </a>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <a href="/guide" className={`hover:text-blue-500 transition-colors ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            <a href="/guide" className={`transition-colors duration-300 ${
+              isDarkMode 
+                ? 'text-white/80 hover:text-white' 
+                : 'text-black/80 hover:text-black'
             }`}>
               Guide
             </a>
-            <a href="/news" className={`hover:text-blue-500 transition-colors ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            <a href="/news" className={`transition-colors duration-300 ${
+              isDarkMode 
+                ? 'text-white/80 hover:text-white' 
+                : 'text-black/80 hover:text-black'
             }`}>
               News
             </a>
@@ -35,10 +43,10 @@ const NewsNavbar = ({ isDarkMode, toggleDarkMode, isMobileMenuOpen, setIsMobileM
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className={`p-2 rounded-lg transition-colors ${
+              className={`p-2 rounded-lg transition-all duration-300 ${
                 isDarkMode 
-                  ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-white/10 text-white hover:bg-white/20' 
+                  : 'bg-black/10 text-black hover:bg-black/20'
               }`}
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -47,8 +55,24 @@ const NewsNavbar = ({ isDarkMode, toggleDarkMode, isMobileMenuOpen, setIsMobileM
             {/* Clerk Auth Buttons */}
             <div className="flex items-center space-x-3">
               <SignedOut>
-                <SignInButton mode="modal" afterSignInUrl="/home" afterSignUpUrl="/home" />
-                <SignUpButton mode="modal" afterSignUpUrl="/home" afterSignInUrl="/home" />
+                <SignInButton mode="modal" afterSignInUrl="/home" afterSignUpUrl="/home">
+                  <button className={`px-4 py-2 rounded-md font-medium transition-all duration-300 border ${
+                    isDarkMode 
+                      ? 'bg-white text-black hover:bg-white/90 border-white' 
+                      : 'bg-black text-white hover:bg-black/90 border-black'
+                  }`}>
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal" afterSignUpUrl="/home" afterSignInUrl="/home">
+                  <button className={`px-4 py-2 rounded-md font-medium transition-all duration-300 border ${
+                    isDarkMode 
+                      ? 'bg-white text-black hover:bg-white/90 border-white' 
+                      : 'bg-black text-white hover:bg-black/90 border-black'
+                  }`}>
+                    Sign Up
+                  </button>
+                </SignUpButton>
               </SignedOut>
               <SignedIn>
                 <UserButton afterSignOutUrl="/" />
@@ -59,7 +83,11 @@ const NewsNavbar = ({ isDarkMode, toggleDarkMode, isMobileMenuOpen, setIsMobileM
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2"
+            className={`md:hidden p-2 rounded-lg transition-all duration-300 ${
+              isDarkMode 
+                ? 'bg-white/10 text-white hover:bg-white/20' 
+                : 'bg-black/10 text-black hover:bg-black/20'
+            }`}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -68,28 +96,54 @@ const NewsNavbar = ({ isDarkMode, toggleDarkMode, isMobileMenuOpen, setIsMobileM
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className={`md:hidden border-t ${
-          isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'
+        <div className={`md:hidden border-t backdrop-blur-sm ${
+          isDarkMode 
+            ? 'border-white/20 bg-black/95' 
+            : 'border-black/20 bg-white/95'
         }`}>
           <div className="px-4 py-3 space-y-3">
-            <a href="/guide" className="block py-2">Guide</a>
-            <a href="/news" className="block py-2">News</a>
+            <a href="/guide" className={`block py-2 transition-colors duration-300 ${
+              isDarkMode ? 'text-white/80 hover:text-white' : 'text-black/80 hover:text-black'
+            }`}>Guide</a>
+            <a href="/news" className={`block py-2 transition-colors duration-300 ${
+              isDarkMode ? 'text-white/80 hover:text-white' : 'text-black/80 hover:text-black'
+            }`}>News</a>
+
             <div className="flex items-center justify-between py-2">
-              <span>Dark Mode</span>
+              <span className={isDarkMode ? 'text-white' : 'text-black'}>Dark Mode</span>
               <button
                 onClick={toggleDarkMode}
-                className={`p-2 rounded-lg ${
-                  isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
+                className={`p-2 rounded-lg transition-all duration-300 ${
+                  isDarkMode 
+                    ? 'bg-white/10 text-white hover:bg-white/20' 
+                    : 'bg-black/10 text-black hover:bg-black/20'
                 }`}
               >
                 {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
             </div>
+
             {/* Clerk Auth Buttons for Mobile */}
             <div className="space-y-2 pt-2">
               <SignedOut>
-                <SignInButton mode="modal" afterSignInUrl="/home" afterSignUpUrl="/home" />
-                <SignUpButton mode="modal" afterSignUpUrl="/home" afterSignInUrl="/home" />
+                <SignInButton mode="modal" afterSignInUrl="/home" afterSignUpUrl="/home">
+                  <button className={`w-full px-4 py-2 rounded-md font-medium transition-all duration-300 border ${
+                    isDarkMode 
+                      ? 'bg-white text-black hover:bg-white/90 border-white' 
+                      : 'bg-black text-white hover:bg-black/90 border-black'
+                  }`}>
+                    Sign In
+                  </button>
+                </SignInButton>
+                <SignUpButton mode="modal" afterSignUpUrl="/home" afterSignInUrl="/home">
+                  <button className={`w-full px-4 py-2 rounded-md font-medium transition-all duration-300 border ${
+                    isDarkMode 
+                      ? 'bg-white text-black hover:bg-white/90 border-white' 
+                      : 'bg-black text-white hover:bg-black/90 border-black'
+                  }`}>
+                    Sign Up
+                  </button>
+                </SignUpButton>
               </SignedOut>
               <SignedIn>
                 <UserButton afterSignOutUrl="/home" />
