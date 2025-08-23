@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: [
-    "https://securex-innovatrix.vercel.app/"
+    "https://securex-innovatrix.vercel.app"
   ],
   credentials: true
 }));
