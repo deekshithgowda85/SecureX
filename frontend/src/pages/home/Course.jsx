@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { BarChart3, Play, CheckCircle, TrendingUp, Award, Clock, Target, ChevronRight } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, Area, AreaChart } from 'recharts';
 import {Link} from "react-router-dom"
+import Footer from '../../components/Footer';
 const userCourses = [
   { 
     id: "phishing", 
@@ -38,7 +39,7 @@ const userCourses = [
   },
 ];
 
-const QuizDashboard = () => {
+const Course = () => {
   const [selectedView, setSelectedView] = useState('overview'); // 'overview', 'analytics', 'courses'
   const [selectedCourse, setSelectedCourse] = useState(null);
 
@@ -450,8 +451,9 @@ const QuizDashboard = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
 
-export default QuizDashboard;
+export default Course;

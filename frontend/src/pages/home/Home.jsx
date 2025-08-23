@@ -13,6 +13,7 @@ import vulnerabilityImg from '../../assets/img7.jpeg';
 import phishingImg from '../../assets/img8.jpeg';
 import siemImg from '../../assets/img9.jpeg';
 import encryptionImg from '../../assets/img10.jpeg';
+import Footer from '../../components/Footer'; // <-- Fix the import
 
 const galleryItems = [
   { image: firewallImg, text: 'Firewall Protection' },
@@ -469,6 +470,7 @@ const Home = () => {
           />
         </div>
       </div>
+      <Footer /> {/* <-- Add Footer component here */}
     </>
   );
 };

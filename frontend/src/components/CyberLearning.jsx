@@ -1,6 +1,8 @@
 // src/pages/CyberLearningDashboard.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { BookOpen } from "lucide-react"; // Add this icon import
+import Footer from "./Footer";
 
 const topics = [
   { 
@@ -153,14 +155,24 @@ const CyberLearningDashboard = () => {
             Back
           </button>
 
-          {/* View Toggle Button */}
-          <button 
-            onClick={toggleView}
-            className="flex items-center px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold border-2 border-black transform hover:scale-105"
-          >
-            <span className="mr-2">{viewMode === "grid" ? "📋" : "⊞"}</span>
-            {viewMode === "grid" ? "List View" : "Grid View"}
-          </button>
+          {/* View Toggle and Course Link */}
+          <div className="flex items-center gap-4">
+            <Link
+              to="/course"
+              className="flex items-center px-6 py-3 bg-white text-black rounded-lg hover:bg-cyan-100 transition-all duration-300 font-semibold border-2 border-black transform hover:scale-105"
+              title="Go to Course Progress"
+            >
+              <BookOpen className="w-5 h-5 mr-2" />
+              Course Progress
+            </Link>
+            <button 
+              onClick={toggleView}
+              className="flex items-center px-6 py-3 bg-white text-black rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold border-2 border-black transform hover:scale-105"
+            >
+              <span className="mr-2">{viewMode === "grid" ? "📋" : "⊞"}</span>
+              {viewMode === "grid" ? "List View" : "Grid View"}
+            </button>
+          </div>
         </div>
 
         {/* Header */}
@@ -207,12 +219,7 @@ const CyberLearningDashboard = () => {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12 p-6 bg-black text-white rounded-2xl">
-          <h3 className="text-xl font-bold mb-2">🛡️ Stay Safe Online</h3>
-          <p className="text-gray-300">
-            Complete all topics to become a cybersecurity expert and protect yourself online.
-          </p>
-        </div>
+      <Footer/>
       </div>
     </div>
   );

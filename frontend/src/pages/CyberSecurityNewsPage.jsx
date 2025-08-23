@@ -4,6 +4,7 @@ import { AlertTriangle, Clock, ExternalLink, RefreshCw, Loader, Shield, ArrowRig
 import NewsNavbar from '../components/NewsNavbar';
 import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 const CyberSecurityNewsPage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -213,19 +214,7 @@ const CyberSecurityNewsPage = () => {
       </main>
 
       {/* Footer */}
-      <footer className={`border-t-2 mt-16 py-8 ${theme.footerBg}`}>
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <Shield className={`w-6 h-6 ${theme.footerText}`} />
-              <span className={`font-bold text-lg ${theme.footerText}`}>CyberWatch</span>
-            </div>
-            <div className={`text-sm font-medium ${theme.footerText}`}>
-              © 2025 CyberWatch. Stay secure, stay informed.
-            </div>
-          </div>
-        </div>
-      </footer>
+    <Footer/>
     </div>
   );
 };
