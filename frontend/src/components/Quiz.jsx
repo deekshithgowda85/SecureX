@@ -68,7 +68,7 @@ const QuizzesPage = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/ai/gemini/${topic}`);
+        const res = await fetch(`https://securex-1.onrender.com/ai/gemini/${topic}`);
         const json = await res.json();
 
         console.log("📩 API response:", json); // debug log

@@ -35,7 +35,7 @@ const CyberSecurityNewsPage = () => {
   const fetchCyberSecurityNews = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/cyber-news");
+      const res = await fetch("https://securex-1.onrender.com/api/cyber-news");
       const data = await res.json();
 
       if (data && data.articles) {
