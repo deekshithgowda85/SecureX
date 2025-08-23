@@ -1,6 +1,3 @@
-Certainly! Here's a comprehensive README template for your GitHub repository, **SecureX**, based on the available information:
-
----
 
 # SecureX
 
