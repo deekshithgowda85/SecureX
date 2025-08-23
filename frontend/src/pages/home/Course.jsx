@@ -195,7 +195,9 @@ const Course= () => {
         </h2>
         <p className="text-gray-300 text-lg mb-6">Ready to enhance your cybersecurity knowledge?</p>
         <button className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors">
-          Continue Learning
+         <Link  to="/cyberLearning">
+         Continue Learning
+         </Link>
         </button>
       </div>
 
