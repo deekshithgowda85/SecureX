@@ -9,6 +9,7 @@ import Course from './pages/home/Course.jsx';
 import Products from './pages/home/Products.jsx';
 import Profile from './pages/home/Profile.jsx';
 import Chatbot from './components/Chatbot.jsx'
+import Quiz from './pages/home/Quiz';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
      
      <Routes>
          <Route path="/" element={<CyberSecurityNewsPage />} />
+         <Route path="/quiz/:demographic" element={<Quiz />} />
          <Route path="/news" element={<CyberSecurityNewsPage />} />
          <Route path="/home" element={<Home />} />
          <Route path="/course" element={<Course />} />
