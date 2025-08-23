@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
-import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, ArrowRight } from 'lucide-react';
+import { AlertTriangle, Clock, ExternalLink, RefreshCw, Loader, Shield, ArrowRight, TrendingUp } from 'lucide-react';
 import NewsNavbar from '../components/NewsNavbar';
 import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
@@ -31,72 +31,31 @@ const CyberSecurityNewsPage = () => {
     "IoT threats"
   ];
 
-  // All icons black or white for B&W theme
-  const iconProps = { className: `w-5 h-5 ${isDarkMode ? "text-white" : "text-black"}` };
-
+  // Fetch real cybersecurity news from backend
   const fetchCyberSecurityNews = async () => {
     setIsLoading(true);
     try {
-      const sources = [
-        'CISA',
-        'Krebs on Security',
-        'Dark Reading',
-        'SC Media',
-        'Threatpost',
-        'SecurityWeek',
-        'The Hacker News',
-        'Bleeping Computer'
-      ];
+      const res = await fetch("http://localhost:5000/api/cyber-news");
+      const data = await res.json();
 
-      const generateTimestamp = () => {
-        const options = ['2 hours ago', '4 hours ago', '6 hours ago', '1 day ago'];
-        return options[Math.floor(Math.random() * options.length)];
-      };
-
-      const renderIcon = (iconType) => {
-        switch(iconType) {
-          case 'alert':
-            return <AlertTriangle {...iconProps} />;
-          case 'bug':
-            return <Bug {...iconProps} />;
-          case 'lock':
-            return <Lock {...iconProps} />;
-          case 'zap':
-            return <Zap {...iconProps} />;
-          case 'shield':
-            return <Shield {...iconProps} />;
-          default:
-            return <AlertTriangle {...iconProps} />;
-        }
-      };
-
-      const topics = [
-        { title: "Critical Vulnerability Found in Networking Equipment", summary: "Remote code execution flaw discovered.", category: "Critical Alert", severity: "high", iconType: "alert" },
-        { title: "Sophisticated Phishing Campaign Hits Banks", summary: "AI-generated phishing bypasses detection.", category: "Data Breach", severity: "high", iconType: "bug" },
-        { title: "New Ransomware-as-a-Service Emerges", summary: "Advanced ransomware offered on dark web.", category: "Malware", severity: "high", iconType: "alert" },
-        { title: "Zero Trust Adoption Reaches 65%", summary: "Growth driven by remote work security.", category: "Technology", severity: "medium", iconType: "shield" },
-        { title: "Supply Chain Attack Compromises Dev Tools", summary: "Thousands of apps affected.", category: "Critical Alert", severity: "high", iconType: "alert" },
-        { title: "Quantum Threat Timeline Accelerates", summary: "Encryption break may come sooner.", category: "Standards", severity: "medium", iconType: "lock" }
-      ];
-
-      const generated = topics.map((t, i) => ({
-        id: i + 1,
-        title: t.title,
-        summary: t.summary,
-        category: t.category,
-        severity: t.severity,
-        timestamp: generateTimestamp(),
-        readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
-        source: sources[Math.floor(Math.random() * sources.length)],
-        icon: renderIcon(t.iconType),
-        url: `#news-${i + 1}`
-      }));
-
-      await new Promise(r => setTimeout(r, 1000));
-      setNewsData(generated);
-      setLastUpdated(new Date());
+      if (data && data.articles) {
+        const formatted = data.articles.map((article, i) => ({
+          id: i + 1,
+          title: article.title || "Untitled",
+          summary: article.description || "No description available",
+          category: article.source?.name || "General",
+          timestamp: new Date(article.publishedAt).toLocaleString(),
+          readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
+          source: article.source?.name,
+          url: article.url,
+        }));
+        setNewsData(formatted);
+        setLastUpdated(new Date());
+      } else {
+        setNewsData([]);
+      }
     } catch (e) {
-      console.error(e);
+      console.error("Error fetching news:", e);
       setNewsData([]);
     } finally {
       setIsLoading(false);
@@ -137,6 +96,7 @@ const CyberSecurityNewsPage = () => {
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
       />
+
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className={`absolute inset-0 ${isDarkMode ? "bg-gradient-to-br from-black via-gray-900 to-black" : "bg-gradient-to-br from-white via-gray-50 to-white"}`} />
@@ -230,54 +190,24 @@ const CyberSecurityNewsPage = () => {
                 className={`rounded-xl border-2 p-6 transition-all duration-300 hover:shadow-xl hover:scale-105 cursor-pointer ${theme.cardBg} ${theme.cardBorder} ${theme.cardHover}`}
                 onClick={() => window.open(news.url, '_blank')}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-lg ${isDarkMode ? "bg-white text-black" : "bg-black text-white"}`}>
-                    {React.cloneElement(news.icon, { className: `w-5 h-5 ${isDarkMode ? "text-black" : "text-white"}` })}
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-xs font-bold px-3 py-1 rounded mb-1 ${isDarkMode ? "bg-white text-black" : "bg-black text-white"}`}>
-                      {news.category}
-                    </div>
-                    {news.source && (
-                      <div className={`text-xs ${theme.muted} font-medium`}>
-                        {news.source}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
                 <h3 className={`text-xl font-bold mb-3 line-clamp-2 ${theme.cardText}`}>
                   {news.title}
                 </h3>
-
                 <p className={`text-sm mb-4 line-clamp-3 leading-relaxed ${theme.descText}`}>
                   {news.summary}
                 </p>
-
                 <div className={`flex items-center justify-between text-sm border-t-2 pt-3 ${isDarkMode ? "border-gray-700" : "border-gray-200"}`}>
                   <div className={`flex items-center space-x-2 ${theme.muted}`}>
-                    <Clock className={`w-4 h-4 ${theme.icon}`} />
+                    <Clock className="w-4 h-4" />
                     <span className="font-medium">{news.timestamp}</span>
                   </div>
                   <div className={`flex items-center space-x-2 ${theme.muted}`}>
-                    <span className="font-medium">{news.readTime}</span>
-                    <ExternalLink className={`w-4 h-4 ${theme.icon}`} />
+                    <span className="font-medium">{news.source}</span>
+                    <ExternalLink className="w-4 h-4" />
                   </div>
                 </div>
               </article>
             ))}
-          </div>
-        )}
-
-        {/* Load More Button */}
-        {!isLoading && newsData.length > 0 && (
-          <div className="text-center mt-12">
-            <button
-              onClick={fetchCyberSecurityNews}
-              className={`px-8 py-3 rounded-lg font-bold transition-all hover:scale-105 border-2 shadow-lg ${theme.buttonBg} ${theme.buttonText} ${theme.buttonHover} ${theme.border}`}
-            >
-              Load More News
-            </button>
           </div>
         )}
       </main>
