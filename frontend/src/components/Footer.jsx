@@ -1,9 +1,9 @@
 import React from 'react';
 
 const contributors = [
-  { id: 1, name: 'Alex Johnson', role: 'Lead Developer', initials: 'AJ', direction: 'left' },
-  { id: 2, name: 'Sarah Mitchell', role: 'UI/UX Designer', initials: 'SM', direction: 'right' },
-  { id: 3, name: 'Mike Chen', role: 'Backend Engineer', initials: 'MC', direction: 'left' }
+  { id: 1, name: 'Manu S', role: 'Developer', initials: 'MS', direction: 'left' },
+  { id: 2, name: 'Bharat S', role: 'Developer', initials: 'BS', direction: 'right' },
+  { id: 3, name: 'Deekshith S', role: 'Developer', initials: 'DG', direction: 'left' }
 ];
 
 function Footer() {

@@ -465,7 +465,7 @@ const Home = () => {
       <CybersecurityTradingHero />
       {/* Circular Gallery below Homelanding */}
       <div className="w-full bg-white py-24 flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-black mb-10">Gallery</h2>
+        <h2 className="text-3xl font-bold text-black mb-8">Security and Safety</h2>
         <div className="w-screen max-w-none h-[480px] px-0 mx-0">
           <CircularGallery
             items={galleryItems}
