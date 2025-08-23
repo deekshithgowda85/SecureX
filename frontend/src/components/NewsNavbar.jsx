@@ -19,7 +19,7 @@ const navItems = [
   { label: "Quiz", href: "/cyberLearning" },
 ];
 
-const dropdownItems = [{ label: "Profile", href: "/profile" }];
+ 
 
 const NewsNavbar = ({
   isDarkMode,
@@ -55,18 +55,9 @@ const NewsNavbar = ({
   }, [isSignedIn, user, dispatch]);
 
   // Dropdown close when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-    }
-    if (dropdownOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
-  }, [dropdownOpen]);
+   
+
+
 
   return (
     <nav
@@ -107,36 +98,8 @@ const NewsNavbar = ({
                 </Link>
               ))}
 
-            {/* Dropdown for Profile */}
-            {isSignedIn && (
-              <div className="relative" ref={dropdownRef}>
-                <button
-                  className={`p-2 rounded-full hover:bg-gray-200 transition-colors ${
-                    dropdownOpen ? "bg-gray-200" : ""
-                  }`}
-                  onClick={() => setDropdownOpen((v) => !v)}
-                  aria-label="More"
-                >
-                  <MoreVertical className="w-6 h-6 text-black" />
-                </button>
-                {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-44 rounded-lg shadow-lg border bg-white z-30">
-                    <div className="py-2">
-                      {dropdownItems.map((item) => (
-                        <Link
-                          key={item.href}
-                          to={item.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          onClick={() => setDropdownOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
+            
+             
 
             {/* Dark Mode Toggle */}
             <button
