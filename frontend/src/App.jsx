@@ -10,7 +10,10 @@ import Products from './pages/home/Products.jsx';
 import Profile from './pages/home/Profile.jsx';
 import Chatbot from './components/Chatbot.jsx'
 import Quiz from './pages/home/Quiz';
-
+import CyberLearinig from "./components/CyberLearning.jsx"
+import CyberLearningDashboard from './components/CyberLearning.jsx';
+import LessonsPage from './components/Lesson.jsx';
+import QuizzesPage from './components/Quiz.jsx';
 function App() {
   return (
     <div>
@@ -18,8 +21,11 @@ function App() {
         <div className="text-white min-h-screen" style={{ background: 'transparent' }}>
      
      <Routes>
+     <Route path="/cyberLearning" element={<CyberLearningDashboard />} />
+        <Route path="/learn/:topic/lesson" element={<LessonsPage />} />
+        <Route path="/learn/:topic/quiz" element={<QuizzesPage />} />
          <Route path="/" element={<CyberSecurityNewsPage />} />
-         <Route path="/quiz/:demographic" element={<Quiz />} />
+         <Route path="/quiz" element={<CyberLearinig />} />
          <Route path="/news" element={<CyberSecurityNewsPage />} />
          <Route path="/home" element={<Home />} />
          <Route path="/course" element={<Course />} />
