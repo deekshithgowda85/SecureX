@@ -1,5 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import NewsNavbar from '../../components/NewsNavbar';
+import CybersecurityTradingHero from '../../components/Homelanding';
+import CircularGallery from '../../components/Components/CircularGallery/CircularGallery';
+import { Check, ArrowRight, Shield, Lock, Users, Globe } from 'lucide-react';
+
+const galleryItems = [
+  { image: 'https://images.unsplash.com/photo-1510511459019-5dda7724fd87?auto=format&fit=crop&w=800&q=80', text: 'Firewall Protection' },
+  { image: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80', text: 'Network Monitoring' },
+  { image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80', text: 'Threat Intelligence' },
+  { image: 'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=800&q=80', text: 'Data Encryption' },
+  { image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80', text: 'Incident Response' },
+  { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80', text: 'Penetration Testing' },
+  { image: 'https://images.unsplash.com/photo-1463438690606-f6778b8c1d10?auto=format&fit=crop&w=800&q=80', text: 'Security Awareness' },
+  { image: 'https://images.unsplash.com/photo-1461344577544-4e5dc9487184?auto=format&fit=crop&w=800&q=80', text: 'Cloud Security' },
+  { image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80', text: 'Vulnerability Scanning' },
+  { image: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=800&q=80', text: 'Multi-factor Authentication' },
+  { image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=800&q=80', text: 'Phishing Protection' },
+  { image: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=800&q=80', text: 'SIEM Integration' },
+];
 
 const Home = () => {
   const leftCardRef = useRef(null);
@@ -160,7 +178,8 @@ const Home = () => {
 
   return (
     <>
-      <NewsNavbar/>
+      <NewsNavbar />
+      {/* Animated/3D card hero section */}
       <div className="min-h-screen bg-white text-black relative overflow-hidden" style={{ perspective: '1200px' }}>
         {/* Background gradient effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/40 via-white to-white"></div>
@@ -169,7 +188,6 @@ const Home = () => {
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-100/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"></div>
 
         {/* 3D Security Cards/Interfaces */}
-        {/* Place cards absolutely around the heading */}
         <div
           ref={leftCardRef}
           className="absolute z-10 top-[18%] left-[6%] w-80 h-96"
@@ -186,18 +204,12 @@ const Home = () => {
                 <span className="text-cyan-600 text-sm font-medium">🛡️ Threat Detection</span>
                 <span className="text-gray-400 text-xs">Real-time</span>
               </div>
-              
-              {/* Threat Level Display */}
               <div className="mb-8">
                 <div className="text-3xl font-bold text-black">Level 9</div>
                 <div className="text-cyan-600 text-sm">Security Status: SECURE</div>
               </div>
-              
-              {/* Security Visualization */}
               <div className="h-40 bg-gray-100 rounded-lg mb-6 relative overflow-hidden border border-cyan-400/20">
                 <div className="absolute inset-0 bg-gradient-to-t from-cyan-200/10 to-transparent"></div>
-                
-                {/* Animated Security Grid */}
                 <div className="absolute inset-0 grid grid-cols-8 grid-rows-6 gap-1 p-2">
                   {[...Array(48)].map((_, i) => (
                     <div 
@@ -207,13 +219,10 @@ const Home = () => {
                     ></div>
                   ))}
                 </div>
-                
                 <div className="absolute bottom-2 left-2 text-xs text-cyan-600">
                   Network Scan Active
                 </div>
               </div>
-              
-              {/* Security Stats */}
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-400">Threats Blocked</span>
@@ -248,14 +257,10 @@ const Home = () => {
                 <span className="text-cyan-600 text-sm font-medium">🔐 Security Hub</span>
                 <span className="text-cyan-600 text-xs bg-cyan-200/20 px-2 py-1 rounded border border-cyan-400/30">LIVE</span>
               </div>
-              
-              {/* Security Score Display */}
               <div className="mb-6">
                 <div className="text-3xl font-bold text-black">98.7%</div>
                 <div className="text-gray-400 text-sm">Defense Efficiency</div>
               </div>
-              
-              {/* Security Metrics Grid */}
               <div className="grid grid-cols-2 gap-3 mb-6">
                 <div className="bg-gray-100 rounded-lg p-3 border border-cyan-400/20">
                   <div className="text-cyan-600 text-xl font-bold">0</div>
@@ -274,8 +279,6 @@ const Home = () => {
                   <div className="text-gray-400 text-xs">Uptime</div>
                 </div>
               </div>
-              
-              {/* Security Level Progress */}
               <div className="mb-4">
                 <div className="flex justify-between text-xs mb-2">
                   <span className="text-gray-400">Security Level</span>
@@ -417,14 +420,14 @@ const Home = () => {
               Master Digital Security
             </div>
           </h1>
-          <p className="text-gray-700 text-lg mb-8 text-center max-w-2xl leading-relaxed pointer-events-auto">
+          <p className="text-black text-lg mb-8 text-center max-w-2xl leading-relaxed pointer-events-auto">
             Join elite cybersecurity professionals in advanced threat detection and digital defense strategies
           </p>
           <div className="flex items-center space-x-4 mb-12 pointer-events-auto">
-            <button className="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg shadow-cyan-500/25">
+            <button className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
               Start Training
             </button>
-            <button className="text-black hover:text-cyan-600 px-8 py-3 rounded-full border border-gray-400 hover:border-cyan-500 transition-all duration-300 hover:scale-105">
+            <button className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg">
               Explore
             </button>
           </div>
@@ -439,6 +442,23 @@ const Home = () => {
             `,
             backgroundSize: '50px 50px'
           }}></div>
+        </div>
+      </div>
+      {/* Homelanding section below */}
+      <CybersecurityTradingHero />
+      {/* Circular Gallery below Homelanding */}
+      <div className="w-full bg-white py-24 flex flex-col items-center">
+        <h2 className="text-3xl font-bold text-black mb-10">Gallery</h2>
+        <div className="w-screen max-w-none h-[480px] px-0 mx-0">
+          <CircularGallery
+            items={galleryItems}
+            bend={3}
+            textColor="#111111"
+            borderRadius={0.05}
+            font="bold 30px Figtree"
+            scrollSpeed={2}
+            scrollEase={0.05}
+          />
         </div>
       </div>
     </>

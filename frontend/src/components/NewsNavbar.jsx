@@ -6,12 +6,12 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@cl
 const navItems = [
   { label: 'Dashboard', href: '/home' },
   { label: 'Products', href: '/products' },
-  { label: 'Courses', href: '/course' }
+  { label: 'Courses', href: '/course' },
+  { label: 'News', href: '/news' },
+  { label: 'Guide', href: '/guide' }
 ];
 
 const dropdownItems = [
-  { label: 'News', href: '/news' },
-  { label: 'Guide', href: '/guide' },
   { label: 'Profile', href: '/profile' }
 ];
 
@@ -69,7 +69,7 @@ const NewsNavbar = ({
                 {item.label}
               </Link>
             ))}
-            {/* Dropdown for News, Guide, Profile */}
+            {/* Dropdown for Profile */}
             <div className="relative" ref={dropdownRef}>
               <button
                 className={`p-2 rounded-full hover:bg-gray-200 transition-colors ${dropdownOpen ? 'bg-gray-200' : ''}`}
