@@ -91,7 +91,7 @@ const FloatingChatbot = forwardRef((props, ref) => {
             cursor: 'pointer'
           }}
         >
-          <MessageCircle size={24} color="black" />
+          <MessageCircle size={28} color="black" fill="black" /> {/* Icon is solid black */}
           {/* Notification dot */}
           <div 
             className="absolute -top-1 -right-1 w-3 h-3 bg-black rounded-full animate-pulse"
@@ -152,16 +152,16 @@ const FloatingChatbot = forwardRef((props, ref) => {
           }}
         >
           {/* Header */}
-          <div className="flex justify-between items-center p-4 bg-white text-black border-b border-black">
+          <div className="flex justify-between items-center p-4 bg-black text-white border-b border-black">
             <div className="flex items-center space-x-2">
-              <Bot className="w-5 h-5" />
-              <h2 className="font-semibold text-lg">Cybersecurity Assistant</h2>
+              <Bot className="w-5 h-5 text-black bg-white rounded-full p-1" /> {/* Black icon on white circle */}
+              <h2 className="font-semibold text-lg text-white">Cybersecurity Assistant</h2>
             </div>
             <button 
               onClick={() => setIsOpen(false)} 
-              className="p-1 hover:bg-black/10 rounded-full transition-colors"
+              className="p-1 hover:bg-white/10 rounded-full transition-colors"
             >
-              <X size={20} />
+              <X size={20} color="white" />
             </button>
           </div>
 
