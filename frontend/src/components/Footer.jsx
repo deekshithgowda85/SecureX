@@ -1,52 +1,61 @@
 import React from 'react';
 
 const contributors = [
-  { id: 1, name: 'Manu S', role: 'Developer', initials: 'MS', direction: 'left' },
-  { id: 2, name: 'Bharat S', role: 'Developer', initials: 'B', direction: 'right' },
-  { id: 3, name: 'Deekshith S', role: 'Developer', initials: 'DG', direction: 'left' }
+  { id: 1, name: 'Alex Johnson', role: 'Lead Developer', initials: 'AJ', direction: 'left' },
+  { id: 2, name: 'Sarah Mitchell', role: 'UI/UX Designer', initials: 'SM', direction: 'right' },
+  { id: 3, name: 'Mike Chen', role: 'Backend Engineer', initials: 'MC', direction: 'left' }
 ];
 
 function Footer() {
-    return (
-        <footer className="flex flex-col items-center justify-center w-full py-20 bg-transparent text-white/70">
-            <span className="text-2xl font-signature font-bold tracking-widest text-white drop-shadow-lg select-none">deekshithgowda</span>
-            <p className="mt-4 text-center">Copyright © 2025 deekshithgowda85. All rights reserved.</p>
-            <div className="flex items-center gap-4 mt-5">
-                {/* Facebook */}
-                <a href="https://facebook.com/your-profile" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </a>
-                {/* Instagram */}
-                <a href="https://instagram.com/_deekshith_gowda___" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M16 11.37a4 4 0 1 1-7.914 1.173A4 4 0 0 1 16 11.37m1.5-4.87h.01" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </a>
-                {/* LinkedIn */}
-                <a href="https://linkedin.com/in/deekshithgowda85" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6M6 9H2v12h4zM4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </a>
-                {/* Twitter */}
-                <a href="https://twitter.com/deekshithgowda0" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </a>
-                {/* GitHub */}
-                <a href="https://github.com/deekshithgowda85" target="_blank" rel="noopener noreferrer" className="hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M9 18c-4.51 2-5-2-7-2" stroke="#fff" strokeOpacity=".5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                </a>
+  return (
+    <footer className="w-full bg-white border-t border-gray-200 pt-8 pb-4 flex flex-col items-center">
+      {/* Contributors Section */}
+      <div className="w-full max-w-4xl flex flex-col items-center">
+        <h3 className="text-lg font-bold text-gray-900 mb-1 tracking-tight flex items-center gap-2">
+          <span className="inline-block w-5 h-0.5 bg-cyan-400 rounded-full" />
+          Contributors
+          <span className="inline-block w-5 h-0.5 bg-cyan-400 rounded-full" />
+        </h3>
+        <div className="mb-4 text-gray-500 text-xs">Meet the team behind SecureX</div>
+        <div className="flex flex-wrap justify-center gap-4 w-full">
+          {contributors.map((contributor) => (
+            <div
+              key={contributor.id}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-50 border border-gray-200 shadow-sm min-w-[160px] transition hover:shadow-md hover:border-cyan-400"
+            >
+              <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-white font-semibold text-xs">
+                {contributor.initials}
+              </div>
+              <div>
+                <div className="text-gray-900 font-semibold text-sm">{contributor.name}</div>
+                <div className="text-gray-500 text-xs">{contributor.role}</div>
+              </div>
             </div>
-        </footer>
-    );
+          ))}
+        </div>
+      </div>
+      {/* Decorative line */}
+      <div className="w-full border-t border-gray-100 mt-8 mb-2"></div>
+      {/* Copyright & GitHub */}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-gray-500 text-xs text-center">
+        <span>
+          © 2025 <span className="font-semibold text-cyan-600">deekshithgowda85</span>. All rights reserved.
+        </span>
+        <a
+          href="https://github.com/deekshithgowda85/SecureX"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-0 md:ml-2 text-cyan-600 hover:underline flex items-center gap-1"
+        >
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.4 5.4 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4" stroke="#0891b2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 18c-4.51 2-5-2-7-2" stroke="#0891b2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          GitHub Repo
+        </a>
+      </div>
+    </footer>
+  );
 }
 
 export default Footer;
