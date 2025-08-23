@@ -9,10 +9,21 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  "https://securex-innovatrix.vercel.app", // frontend origin
+  "http://localhost:3000" // optional, for local dev
+];
+
 app.use(cors({
-  origin: [
-    "https://securex-innovatrix.vercel.app"
-  ],
+  origin: function(origin, callback) {
+    // allow requests with no origin (like Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true
 }));
 
