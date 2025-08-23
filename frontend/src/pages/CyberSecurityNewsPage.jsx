@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
-import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, Sun, Moon, Menu, X, ArrowRight } from 'lucide-react';
+import { AlertTriangle, Clock, ExternalLink, TrendingUp, Bug, Lock, Zap, RefreshCw, Loader, Shield, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import NewsNavbar from '../components/NewsNavbar';
+import NewsNavbar from '../components/NewsNavbar'; // <-- Only import once!
 import { useUser, useClerk } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
-import NewsNavbar from '../components/NewsNavbar';
 
 const CyberSecurityNewsPage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [newsData, setNewsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [theme, setTheme] = useState('light'); // light or dark
+  const [isDarkMode, setIsDarkMode] = useState(false); // Use isDarkMode for theme
   const { isSignedIn } = useUser();
   const clerk = useClerk();
   const navigate = useNavigate();
@@ -61,22 +60,22 @@ const CyberSecurityNewsPage = () => {
       };
 
       // All icons pure black or white
-      const iconProps = { className: `w-5 h-5 ${theme === 'dark' ? 'text-white' : 'text-black'}` };
+      const iconProps = { className: `w-5 h-5 ${isDarkMode ? 'text-white' : 'text-black'}` };
 
       const renderIcon = (iconType) => {
         switch(iconType) {
           case 'alert':
-            return React.createElement(AlertTriangle, { className: "w-5 h-5" });
+            return <AlertTriangle {...iconProps} />;
           case 'bug':
-            return React.createElement(Bug, { className: "w-5 h-5" });
+            return <Bug {...iconProps} />;
           case 'lock':
-            return React.createElement(Lock, { className: "w-5 h-5" });
+            return <Lock {...iconProps} />;
           case 'zap':
-            return React.createElement(Zap, { className: "w-5 h-5" });
+            return <Zap {...iconProps} />;
           case 'shield':
-            return React.createElement(Shield, { className: "w-5 h-5" });
+            return <Shield {...iconProps} />;
           default:
-            return React.createElement(AlertTriangle, { className: "w-5 h-5" });
+            return <AlertTriangle {...iconProps} />;
         }
       };
 
@@ -98,7 +97,7 @@ const CyberSecurityNewsPage = () => {
         timestamp: generateTimestamp(),
         readTime: `${Math.floor(Math.random() * 5) + 3} min read`,
         source: sources[Math.floor(Math.random() * sources.length)],
-        icon: React.createElement(icons[t.iconType] || AlertTriangle, { className: "w-5 h-5" }),
+        icon: renderIcon(t.iconType),
         url: `#news-${i + 1}`
       }));
 
@@ -119,17 +118,18 @@ const CyberSecurityNewsPage = () => {
     // Optionally, set up auto-refresh every 30 minutes:
     // const interval = setInterval(fetchCyberSecurityNews, 1800000);
     // return () => clearInterval(interval);
-  }, []);
+    // eslint-disable-next-line
+  }, [isDarkMode]);
 
   return (
     <div className={`min-h-screen transition-all duration-300 ${themeClasses}`}>
       <NewsNavbar
-        isDarkMode={theme === 'dark'}
-        toggleDarkMode={toggleTheme}
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
-        iconColor={theme === 'dark' ? 'text-white' : 'text-black'}
-        textColor={theme === 'dark' ? 'text-white' : 'text-black'}
+        iconColor={isDarkMode ? 'text-white' : 'text-black'}
+        textColor={isDarkMode ? 'text-white' : 'text-black'}
       />
       {/* Hero Section */}
       <div className="relative overflow-hidden">
@@ -179,7 +179,7 @@ const CyberSecurityNewsPage = () => {
       {/* News Grid */}
       <main className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex items-center justify-between mb-8">
-          <h2 className={`text-3xl font-bold ${theme === 'dark' ? 'text-white' : 'text-black'}`}>Latest Threats & News</h2>
+          <h2 className={`text-3xl font-bold ${isDarkMode ? 'text-white' : 'text-black'}`}>Latest Threats & News</h2>
           <div className="flex items-center space-x-4">
             {lastUpdated && (
               <span className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -195,7 +195,7 @@ const CyberSecurityNewsPage = () => {
                   : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''} ${theme === 'dark' ? 'text-white' : 'text-black'}`} />
+              <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''} ${isDarkMode ? 'text-white' : 'text-black'}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
             <div className={`px-4 py-2 rounded-lg ${
@@ -258,7 +258,7 @@ const CyberSecurityNewsPage = () => {
                   </div>
                 </div>
 
-                <h3 className={`text-xl font-bold mb-3 line-clamp-2 ${theme === 'dark' ? 'text-white' : 'text-black'}`}>
+                <h3 className={`text-xl font-bold mb-3 line-clamp-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>
                   {news.title}
                 </h3>
 

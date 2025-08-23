@@ -1,6 +1,6 @@
 import React from 'react';
 import { Shield, Sun, Moon, Menu, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 
 const NewsNavbar = ({
@@ -8,11 +8,7 @@ const NewsNavbar = ({
   toggleDarkMode,
   isMobileMenuOpen,
   setIsMobileMenuOpen,
-  iconColor = '',
-  textColor = '',
 }) => {
-  const location = useLocation();
-
   return (
     <nav className={`sticky top-0 z-50 border-b backdrop-blur-sm ${
       isDarkMode 
@@ -22,25 +18,24 @@ const NewsNavbar = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <a href="/news" className="flex items-center space-x-3 group">
+          <Link to="/news" className="flex items-center space-x-3 group">
             <Shield className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-transform" />
             <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:underline">
               SecureX
             </span>
           </Link>
-
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <a href="/guide" className={`hover:text-blue-500 transition-colors ${
+            <Link to="/guide" className={`hover:text-blue-500 transition-colors ${
               isDarkMode ? 'text-gray-300' : 'text-gray-600'
             }`}>
               Guide
-            </a>
-            <a href="/news" className={`hover:text-blue-500 transition-colors ${
+            </Link>
+            <Link to="/news" className={`hover:text-blue-500 transition-colors ${
               isDarkMode ? 'text-gray-300' : 'text-gray-600'
             }`}>
               News
-            </a>
+            </Link>
 
             {/* Dark Mode Toggle */}
             <button
@@ -82,8 +77,8 @@ const NewsNavbar = ({
           isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'
         }`}>
           <div className="px-4 py-3 space-y-3">
-            <a href="/guide" className="block py-2">Guide</a>
-            <a href="/news" className="block py-2">News</a>
+            <Link to="/guide" className="block py-2">Guide</Link>
+            <Link to="/news" className="block py-2">News</Link>
             <div className="flex items-center justify-between py-2">
               <span>Dark Mode</span>
               <button
@@ -105,15 +100,7 @@ const NewsNavbar = ({
                 <UserButton afterSignOutUrl="/home" />
               </SignedIn>
             </div>
-          </SignedIn>
-          <button
-            onClick={toggleDarkMode}
-            className={`mt-2 p-2 rounded-full border transition-colors w-full flex items-center justify-center ${isDarkMode ? 'bg-gray-900 border-gray-700 text-white hover:bg-gray-800' : 'bg-gray-100 border-gray-300 text-black hover:bg-gray-200'}`}
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            <span className="ml-2">{isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
+          </div>
         </div>
       )}
     </nav>
