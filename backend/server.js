@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: [
-    "https://securex-innovatrix.vercel.app/"
+    "https://securex-innovatrix.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000"
   ],
   credentials: true
 }));
@@ -67,8 +69,20 @@ app.get("/api/cyber-news", async (req, res) => {
 // 🔹 Schedule periodic refresh
 setInterval(fetchAndStoreNews, REFRESH_INTERVAL_MIN * 60 * 1000);
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({ 
+    status: "OK", 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development"
+  });
+});
+
 app.use("/ai",aiRoutes);
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🔗 Health check: http://localhost:${PORT}/health`);
+  console.log(`🤖 AI routes: http://localhost:${PORT}/ai/gemini/:topic`);
 });

@@ -67,23 +67,56 @@ const QuizzesPage = () => {
   const [showResults, setShowResults] = useState(false);
   const [score, setScore] = useState(0);
 
-  useEffect(() => {
-    const fetchQuiz = async () => {
-      try {
-        const res = await fetch(`https://securex-1.onrender.com/ai/gemini/${topic}`);
-        const json = await res.json();
+  console.log("🎯 Quiz component mounted with topic:", topic);
 
+  useEffect(() => {
+    const fetchQuiz = async (retryCount = 0) => {
+      try {
+        console.log("🔍 Fetching quiz for topic:", topic, retryCount > 0 ? `(retry ${retryCount})` : '');
+        const res = await fetch(`https://securex-1.onrender.com/ai/gemini/${topic}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const json = await res.json();
         console.log("📩 API response:", json); // debug log
 
+        if (json.error) {
+          throw new Error(json.error);
+        }
+
         if (!json.quiz || !Array.isArray(json.quiz)) {
-          throw new Error("Quiz data not found in API response");
+          console.error("❌ Invalid quiz data structure:", json);
+          throw new Error("Quiz data not found in API response. Please try again.");
+        }
+
+        if (json.quiz.length === 0) {
+          throw new Error("No quiz questions available for this topic.");
         }
 
         setQuizData(json.quiz);
+        console.log("✅ Quiz data loaded successfully:", json.quiz.length, "questions");
       } catch (err) {
-        setError(err.message);
+        console.error("❌ Quiz fetch error:", err);
+        
+        // Retry logic for network errors
+        if (retryCount < 2 && (err.message.includes('Failed to fetch') || err.message.includes('Network'))) {
+          console.log("🔄 Retrying...");
+          setTimeout(() => fetchQuiz(retryCount + 1), 2000);
+          return;
+        }
+        
+        setError(err.message || "Failed to load quiz. Please try again.");
       } finally {
-        setLoading(false);
+        if (retryCount === 0) {
+          setLoading(false);
+        }
       }
     };
     fetchQuiz();
@@ -137,13 +170,21 @@ const handleSubmitQuiz = () => {
         <div className="bg-white border-2 border-red-500 rounded-2xl p-8 text-center max-w-md">
           <div className="text-6xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-black mb-4">Quiz Load Failed</h2>
-          <p className="text-red-600 font-medium">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="mt-6 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-semibold"
-          >
-            Try Again
-          </button>
+          <p className="text-red-600 font-medium mb-4">{error}</p>
+          <div className="space-y-3">
+            <button 
+              onClick={() => window.location.reload()} 
+              className="w-full px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-semibold"
+            >
+              Try Again
+            </button>
+            <button 
+              onClick={() => window.history.back()} 
+              className="w-full px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors font-semibold"
+            >
+              Go Back
+            </button>
+          </div>
         </div>
       </div>
     );
