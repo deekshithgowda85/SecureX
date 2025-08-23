@@ -9,7 +9,6 @@ import Course from './pages/home/Course.jsx';
 import Products from './pages/home/Products.jsx';
 import Profile from './pages/home/Profile.jsx';
 import Chatbot from './components/Chatbot.jsx'
-import Quiz from './pages/home/Quiz';
 import CyberLearinig from "./components/CyberLearning.jsx"
 import CyberLearningDashboard from './components/CyberLearning.jsx';
 import LessonsPage from './components/Lesson.jsx';

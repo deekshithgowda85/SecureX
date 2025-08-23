@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import React from 'react'
 import NewsNavbar from '../../components/NewsNavbar';
+import Footer from '../../components/Footer';
 import { 
   Shield, 
   Search,
@@ -266,21 +267,7 @@ const Products = () => {
           </div>
         </section>
       </div>
-
-      {/* Footer */}
-      <footer className="bg-black text-white py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Shield className="w-6 h-6" />
-              <span className="text-lg font-semibold">SecureX</span>
-            </div>
-            <p className="text-white">
-              Protecting India's Digital Future
-            </p>
-          </div>
-        </div>
-      </footer>
+<Footer />
     </div>
   );
 };

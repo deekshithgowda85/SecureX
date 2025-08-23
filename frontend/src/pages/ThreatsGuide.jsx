@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { threatsData } from "./data";
 import { motion, AnimatePresence } from "framer-motion";
 import NewsNavbar from "../components/NewsNavbar";
+import Footer from "../components/Footer";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -28,7 +29,6 @@ const modalVariants = {
 };
 
 const ThreatsGuide = () => {
-  const [openId, setOpenId] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedThreat, setSelectedThreat] = useState(null);
@@ -166,18 +166,7 @@ const ThreatsGuide = () => {
         )}
       </AnimatePresence>
 
-      {/* Footer */}
-      <footer
-        className={`border-t-2 mt-16 py-8 ${
-          isDarkMode ? "border-white bg-black" : "border-black bg-white"
-        }`}
-      >
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p className={`text-sm font-medium ${themeClasses.mainText}`}>
-            © 2025 CyberSecurity Threats Guide. Stay protected, stay informed.
-          </p>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 };
