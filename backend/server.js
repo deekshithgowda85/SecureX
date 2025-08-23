@@ -7,9 +7,14 @@ import News from "./models/news.js";
 import aiRoutes from "./routes/aiRoutes.js"
 dotenv.config();
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://securex-innovatrix.vercel.app/"
+  ],
+  credentials: true
+}));
 
 const NEWS_API_KEY = process.env.NEWS_API_KEY  ;
  

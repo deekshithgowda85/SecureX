@@ -4,6 +4,9 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { lessonQuizPrompt } from "../prompts/geminiPrompts.js";
 import dotenv from "dotenv";
 dotenv.config();
+// In your main app file (e.g., app.js or server.js), use the route
+import aiRoutes from "./routes/gemini.js";
+app.use("/ai", aiRoutes);
 
 const router = express.Router();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -23,7 +26,7 @@ function cleanGeminiResponse(text) {
 }
 
 // Cybersecurity Lessons + Quizzes
-router.get("/gemini/:topic", async (req, res) => {
+router.get("/ai/gemini/:topic", async (req, res) => {
   const { topic } = req.params;
   const prompt = lessonQuizPrompt(topic);
 
@@ -49,3 +52,5 @@ router.get("/gemini/:topic", async (req, res) => {
 });
 
 export default router;
+
+

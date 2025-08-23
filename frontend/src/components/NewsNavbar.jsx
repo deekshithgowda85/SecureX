@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Shield, Sun, Moon, Menu, X, MoreVertical } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Shield, Sun, Moon, Menu, X } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   SignInButton,
@@ -19,8 +19,6 @@ const navItems = [
   { label: "Quiz", href: "/cyberLearning" },
 ];
 
- 
-
 const NewsNavbar = ({
   isDarkMode,
   toggleDarkMode,
@@ -31,9 +29,6 @@ const NewsNavbar = ({
   const activeIndex = navItems.findIndex(
     (item) => item.href === location.pathname
   );
-
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef();
 
   // Clerk
   const { isSignedIn, user } = useUser();
@@ -53,11 +48,6 @@ const NewsNavbar = ({
       dispatch(clearUser());
     }
   }, [isSignedIn, user, dispatch]);
-
-  // Dropdown close when clicking outside
-   
-
-
 
   return (
     <nav
@@ -79,7 +69,7 @@ const NewsNavbar = ({
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {isSignedIn && // ✅ Clerk state directly
+            {isSignedIn &&
               navItems.map((item, idx) => (
                 <Link
                   key={item.href}
@@ -97,9 +87,6 @@ const NewsNavbar = ({
                   {item.label}
                 </Link>
               ))}
-
-            
-             
 
             {/* Dark Mode Toggle */}
             <button
@@ -180,21 +167,6 @@ const NewsNavbar = ({
                   {item.label}
                 </Link>
               ))}
-
-            {isSignedIn && (
-              <div className="border-t pt-2">
-                {dropdownItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    className="block py-2 rounded-lg text-base font-semibold text-black hover:bg-blue-50"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            )}
 
             <div className="flex items-center justify-between py-2">
               <span className={isDarkMode ? "text-white" : "text-black"}>
