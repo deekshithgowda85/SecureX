@@ -3,27 +3,21 @@ import React from 'react'
 import Navbar from '../../components/Navbar'
 import { 
   Shield, 
-  Smartphone, 
-  Globe, 
-  Users, 
-  Eye, 
-  Lock, 
-  AlertTriangle, 
-  CheckCircle, 
-  Zap, 
-  Brain, 
-  Network,
   Search,
   Mail,
   MessageCircle,
+  Network,
+  Eye,
   CreditCard,
-  Home,
-  GraduationCap,
-  Briefcase,
-  Heart,
-  ChevronRight,
+  Lock,
+  Globe,
+  CheckCircle,
+  Brain,
+  AlertTriangle,
+  Zap,
   Star
 } from 'lucide-react';
+
 const Products = () => {
   const [activeCategory, setActiveCategory] = useState('protection');
 
@@ -31,7 +25,6 @@ const Products = () => {
     protection: {
       title: 'Threat Protection',
       icon: Shield,
-      color: 'blue',
       features: [
         {
           icon: Mail,
@@ -62,7 +55,6 @@ const Products = () => {
     verification: {
       title: 'Identity Verification',
       icon: CheckCircle,
-      color: 'green',
       features: [
         {
           icon: Eye,
@@ -93,7 +85,6 @@ const Products = () => {
     monitoring: {
       title: 'Smart Monitoring',
       icon: Brain,
-      color: 'purple',
       features: [
         {
           icon: AlertTriangle,
@@ -123,39 +114,6 @@ const Products = () => {
     }
   };
 
-  const demographicFeatures = [
-    {
-      icon: GraduationCap,
-      title: 'Students',
-      description: 'Job scam detection, social media safety, campus network protection',
-      color: 'bg-blue-100 text-blue-700'
-    },
-    {
-      icon: Briefcase,
-      title: 'Professionals', 
-      description: 'Email security, investment fraud protection, LinkedIn safety',
-      color: 'bg-indigo-100 text-indigo-700'
-    },
-    {
-      icon: Home,
-      title: 'Homemakers',
-      description: 'Shopping safety, WhatsApp protection, family finance monitoring',
-      color: 'bg-purple-100 text-purple-700'
-    },
-    {
-      icon: Globe,
-      title: 'Rural Users',
-      description: 'Government scheme validation, digital payment safety, local language support',
-      color: 'bg-green-100 text-green-700'
-    },
-    {
-      icon: Heart,
-      title: 'Senior Citizens',
-      description: 'Health scam protection, simplified interface, family connection features',
-      color: 'bg-orange-100 text-orange-700'
-    }
-  ];
-
   const stats = [
     { number: '12.9M+', label: 'Protected Users' },
     { number: '45K+', label: 'Daily Threats Blocked' },
@@ -163,34 +121,24 @@ const Products = () => {
     { number: '24/7', label: 'Real-time Protection' }
   ];
 
-  const getColorClasses = (color) => {
-    const colors = {
-      blue: 'bg-blue-500 text-white',
-      green: 'bg-green-500 text-white',
-      purple: 'bg-purple-500 text-white'
-    };
-    return colors[color] || colors.blue;
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-        <Navbar />
+    <div className="min-h-screen bg-black">
+      <Navbar />
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
+      <section className="bg-white text-black py-16 border-b border-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Advanced Cybersecurity Made Simple
           </h2>
-          <p className="text-xl mb-8 max-w-3xl mx-auto">
+          <p className="text-xl mb-8 max-w-3xl mx-auto text-black">
             Protect yourself and your family from phishing, fraud, and cyber threats with our AI-powered security suite designed specifically for Indian users.
           </p>
-          
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-3xl font-bold mb-2">{stat.number}</div>
-                <div className="text-blue-100">{stat.label}</div>
+                <div className="text-3xl font-bold mb-2 text-black">{stat.number}</div>
+                <div className="text-black">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -198,20 +146,20 @@ const Products = () => {
       </section>
 
       {/* Feature Categories */}
-      <section className="py-16">
+      <section className="py-16 bg-white border-b border-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+            <h3 className="text-3xl font-bold text-black mb-4">
               Comprehensive Security Features
             </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-black max-w-2xl mx-auto">
               Our platform offers multiple layers of protection tailored to Indian cyber threats
             </p>
           </div>
 
           {/* Category Tabs */}
           <div className="flex justify-center mb-8">
-            <div className="bg-white rounded-lg shadow-sm border p-1 flex space-x-1">
+            <div className="bg-white rounded-lg shadow-sm border border-black p-1 flex space-x-1">
               {Object.entries(featureCategories).map(([key, category]) => {
                 const IconComponent = category.icon;
                 return (
@@ -220,8 +168,8 @@ const Products = () => {
                     onClick={() => setActiveCategory(key)}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-md font-medium transition-all ${
                       activeCategory === key
-                        ? `${getColorClasses(category.color)}`
-                        : 'text-gray-500 hover:text-gray-700'
+                        ? 'bg-black text-white'
+                        : 'text-black hover:bg-black hover:text-white'
                     }`}
                   >
                     <IconComponent className="w-5 h-5" />
@@ -237,21 +185,21 @@ const Products = () => {
             {featureCategories[activeCategory].features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <div key={index} className="bg-white rounded-lg shadow-sm border p-6 hover:shadow-md transition-shadow">
+                <div key={index} className="bg-white rounded-lg shadow-sm border border-black p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-start space-x-4">
-                    <div className={`p-3 rounded-lg ${getColorClasses(featureCategories[activeCategory].color)}`}>
+                    <div className="p-3 rounded-lg bg-black text-white">
                       <IconComponent className="w-6 h-6" />
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                      <h4 className="text-lg font-semibold text-black mb-2">
                         {feature.title}
                       </h4>
-                      <p className="text-gray-600 mb-3">
+                      <p className="text-black mb-3">
                         {feature.description}
                       </p>
                       <div className="flex items-center text-sm">
-                        <Star className="w-4 h-4 text-yellow-500 mr-1" />
-                        <span className="font-medium text-green-600">{feature.highlight}</span>
+                        <Star className="w-4 h-4 text-black mr-1" />
+                        <span className="font-medium text-black">{feature.highlight}</span>
                       </div>
                     </div>
                   </div>
@@ -261,86 +209,73 @@ const Products = () => {
           </div>
         </div>
       </section>
-
-      {/* Demographic-Specific Features */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Tailored Protection for Every Indian
-            </h3>
-            <p className="text-lg text-gray-600">
-              Specialized security features designed for different demographics and their unique vulnerabilities
+      <div className='flex flex-row justify-center items-center gap-8 bg-white py-16'>
+        {/* Profile/News Card Section */}
+        <section>
+          <div className="max-w-md w-full bg-white text-black rounded-lg shadow-lg p-8 flex flex-col items-center border border-black">
+            <img
+              src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=facearea&w=256&q=80"
+              alt="Profile"
+              className="w-24 h-24 rounded-full mb-4 border-4 border-black"
+            />
+            <h4 className="text-2xl font-bold mb-2">Cybersecurity News</h4>
+            <p className="text-base mb-4 text-center">
+              <strong>Latest:</strong> Over 45,000 phishing attempts blocked this week. Stay vigilant and check all suspicious emails and links before clicking.
             </p>
+            <div className="flex items-center space-x-2 text-sm">
+              <Shield className="w-5 h-5" />
+              <span>SecureX News Desk</span>
+            </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {demographicFeatures.slice(0, 3).map((demo, index) => {
-              const IconComponent = demo.icon;
-              return (
-                <div key={index} className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${demo.color}`}>
-                    <IconComponent className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-xl font-semibold text-gray-900 mb-2">{demo.title}</h4>
-                  <p className="text-gray-600 mb-4">{demo.description}</p>
-                  <button className="flex items-center text-blue-600 hover:text-blue-700 font-medium">
-                    Learn more <ChevronRight className="w-4 h-4 ml-1" />
-                  </button>
-                </div>
-              );
-            })}
+        <section>
+          <div className="max-w-md w-full bg-white text-black rounded-lg shadow-lg p-8 flex flex-col items-center border border-black">
+            <img
+              src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=256&q=80"
+              alt="Product"
+              className="w-24 h-24 rounded-full mb-4 border-4 border-black"
+            />
+            <h4 className="text-2xl font-bold mb-2">SecureX Antivirus Pro</h4>
+            <p className="text-base mb-4 text-center">
+              <strong>Latest:</strong> The ultimate protection for your devices. Real-time virus scanning, ransomware shield, and privacy guard—all in a simple, fast package.
+            </p>
+            <div className="flex items-center space-x-2 text-sm">
+              <Shield className="w-5 h-5" />
+              <span>SecureX News Desk</span>
+            </div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 max-w-4xl mx-auto">
-            {demographicFeatures.slice(3, 5).map((demo, index) => {
-              const IconComponent = demo.icon;
-              return (
-                <div key={index + 3} className="bg-gray-50 rounded-lg p-6 hover:shadow-md transition-shadow">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${demo.color}`}>
-                    <IconComponent className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-xl font-semibold text-gray-900 mb-2">{demo.title}</h4>
-                  <p className="text-gray-600 mb-4">{demo.description}</p>
-                  <button className="flex items-center text-blue-600 hover:text-blue-700 font-medium">
-                    Learn more <ChevronRight className="w-4 h-4 ml-1" />
-                  </button>
-                </div>
-              );
-            })}
+        {/* Product Card Section */}
+        <section>
+          <div className="max-w-md w-full bg-white text-black rounded-lg shadow-lg p-8 flex flex-col items-center border border-black">
+            <img
+              src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=256&q=80"
+              alt="Chatbot"
+              className="w-24 h-24 rounded-full mb-4 border-4 border-black"
+            />
+            <h4 className="text-2xl font-bold mb-2">SecureX Chatbot Assistance</h4>
+            <p className="text-base mb-4 text-center">
+              <strong>Need help?</strong> Our AI-powered chatbot is available 24/7 to answer your cybersecurity questions, guide you through threat detection, and provide instant support.
+            </p>
+            <div className="flex items-center space-x-2 text-sm">
+              <Shield className="w-5 h-5" />
+              <span>SecureX Support</span>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-green-500 to-blue-600 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-3xl font-bold mb-4">
-            Ready to Secure Your Digital Life?
-          </h3>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join millions of Indians who trust SecureX for comprehensive cyber protection
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-              Start Free Trial
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
-              See Demo
-            </button>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8">
+      <footer className="bg-black text-white py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Shield className="w-6 h-6" />
               <span className="text-lg font-semibold">SecureX</span>
             </div>
-            <p className="text-gray-400">
+            <p className="text-white">
               Protecting India's Digital Future
             </p>
           </div>
