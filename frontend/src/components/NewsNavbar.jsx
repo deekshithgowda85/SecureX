@@ -1,7 +1,19 @@
-import React from 'react';
-import { Shield, Sun, Moon, Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { Shield, Sun, Moon, Menu, X, MoreVertical } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
+
+const navItems = [
+  { label: 'Dashboard', href: '/home' },
+  { label: 'Products', href: '/products' },
+  { label: 'Courses', href: '/course' },
+  { label: 'News', href: '/news' },
+  { label: 'Guide', href: '/guide' }
+];
+
+const dropdownItems = [
+  { label: 'Profile', href: '/profile' }
+];
 
 const NewsNavbar = ({
   isDarkMode,
@@ -9,6 +21,24 @@ const NewsNavbar = ({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
 }) => {
+  const location = useLocation();
+  const activeIndex = navItems.findIndex(item => item.href === location.pathname);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef();
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [dropdownOpen]);
+
   return (
     <nav className={`sticky top-0 z-50 border-b backdrop-blur-sm ${
       isDarkMode 
@@ -19,24 +49,52 @@ const NewsNavbar = ({
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/news" className="flex items-center space-x-3 group">
-            <Shield className={`w-8 h-8 transition-transform ${isDarkMode ? 'text-white' : 'text-black'} group-hover:scale-110`} />
-            <span className={`text-xl font-bold transition-colors group-hover:underline ${isDarkMode ? 'text-white' : 'text-black'}`}>
+            <Shield className="w-8 h-8 transition-transform text-black group-hover:scale-110" />
+            <span className="text-xl font-bold transition-colors group-hover:underline text-black">
               SecureX
             </span>
           </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/guide" className={`hover:text-gray-900 transition-colors ${
-              isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
-            }`}>
-              Guide
-            </Link>
-            <Link to="/news" className={`hover:text-gray-900 transition-colors ${
-              isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
-            }`}>
-              News
-            </Link>
-
+            {navItems.map((item, idx) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={`px-4 py-2 rounded-lg text-base font-semibold transition-all duration-200 ${
+                  activeIndex === idx
+                    ? (isDarkMode ? 'bg-gray-800 text-white' : 'bg-blue-100 text-blue-700')
+                    : (isDarkMode ? 'text-gray-300 hover:bg-gray-800' : 'text-black hover:bg-blue-50')
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {/* Dropdown for Profile */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className={`p-2 rounded-full hover:bg-gray-200 transition-colors ${dropdownOpen ? 'bg-gray-200' : ''}`}
+                onClick={() => setDropdownOpen((v) => !v)}
+                aria-label="More"
+              >
+                <MoreVertical className="w-6 h-6 text-black" />
+              </button>
+              {dropdownOpen && (
+                <div className={`absolute right-0 mt-2 w-44 rounded-lg shadow-lg border bg-white z-30`}>
+                  <div className="py-2">
+                    {dropdownItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100`}
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             {/* Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
@@ -48,7 +106,6 @@ const NewsNavbar = ({
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
-
             {/* Clerk Auth Buttons */}
             <div className="flex items-center space-x-3">
               <SignedOut>
@@ -60,7 +117,6 @@ const NewsNavbar = ({
               </SignedIn>
             </div>
           </div>
-
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -70,15 +126,39 @@ const NewsNavbar = ({
           </button>
         </div>
       </div>
-
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className={`md:hidden border-t ${
           isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'
         }`}>
           <div className="px-4 py-3 space-y-3">
-            <Link to="/guide" className={`block py-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>Guide</Link>
-            <Link to="/news" className={`block py-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>News</Link>
+            {navItems.map((item, idx) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={`block py-2 rounded-lg text-base font-semibold ${
+                  activeIndex === idx
+                    ? (isDarkMode ? 'bg-gray-800 text-white' : 'bg-blue-100 text-blue-700')
+                    : (isDarkMode ? 'text-gray-300 hover:bg-gray-800' : 'text-black hover:bg-blue-50')
+                }`}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+            {/* Dropdown in mobile menu */}
+            <div className="border-t pt-2">
+              {dropdownItems.map((item) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="block py-2 rounded-lg text-base font-semibold text-black hover:bg-blue-50"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
             <div className="flex items-center justify-between py-2">
               <span className={isDarkMode ? 'text-white' : 'text-black'}>Dark Mode</span>
               <button
