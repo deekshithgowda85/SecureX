@@ -90,6 +90,94 @@ const CyberSafetyDashboard = () => {
     }, 2000);
   };
 
+
+import React, { useState } from 'react';
+import Navbar from '../../components/Navbar';
+import { Shield, Users, BookOpen, TrendingUp, AlertTriangle, Play, BarChart3, Globe, Home as HomeIcon, Briefcase, GraduationCap, Heart, User } from 'lucide-react';
+
+const Course = () => {
+  const [selectedModule, setSelectedModule] = useState(null);
+
+  const demographics = [
+    {
+      id: 'students',
+      name: 'Students',
+      icon: GraduationCap,
+      color: 'bg-blue-500',
+      hoverColor: 'hover:bg-blue-600',
+      lightColor: 'bg-blue-50',
+      count: '2.3M',
+      completion: 78,
+      rating: 4.2,
+      threats: ['Fake job scams', 'Social media fraud', 'Online gaming scams', 'Educational loan fraud'],
+      activeModule: 'Social Media Safety'
+    },
+    {
+      id: 'professionals',
+      name: 'Professionals',
+      icon: Briefcase,
+      color: 'bg-indigo-500',
+      hoverColor: 'hover:bg-indigo-600',
+      lightColor: 'bg-indigo-50',
+      count: '1.8M',
+      completion: 85,
+      rating: 4.5,
+      threats: ['Phishing emails', 'Business email compromise', 'Fake investment schemes', 'Identity theft'],
+      activeModule: 'Phishing Detection'
+    },
+    {
+      id: 'homemakers',
+      name: 'Homemakers',
+      icon: HomeIcon,
+      color: 'bg-purple-500',
+      hoverColor: 'hover:bg-purple-600',
+      lightColor: 'bg-purple-50',
+      count: '3.1M',
+      completion: 72,
+      rating: 4.3,
+      threats: ['Online shopping fraud', 'Fake OTP calls', 'WhatsApp scams', 'Prize scams'],
+      activeModule: 'Safe Online Shopping'
+    },
+    {
+      id: 'rural',
+      name: 'Rural Users',
+      icon: Globe,
+      color: 'bg-green-500',
+      hoverColor: 'hover:bg-green-600',
+      lightColor: 'bg-green-50',
+      count: '4.2M',
+      completion: 68,
+      rating: 4.1,
+      threats: ['Digital payment fraud', 'Fake government schemes', 'Agricultural scams', 'Mobile banking fraud'],
+      activeModule: 'Digital Payment Safety'
+    },
+    {
+      id: 'seniors',
+      name: 'Senior Citizens',
+      icon: Heart,
+      color: 'bg-orange-500',
+      hoverColor: 'hover:bg-orange-600',
+      lightColor: 'bg-orange-50',
+      count: '1.5M',
+      completion: 65,
+      rating: 4.4,
+      threats: ['Health insurance fraud', 'Pension scams', 'Tech support scams', 'Medicine fraud'],
+      activeModule: 'Health Scam Awareness'
+    }
+  ];
+
+  const overallStats = {
+    totalLearners: '12.9M',
+    averageCompletion: '74%',
+    threatsBlocked: '45.2K',
+    activeCourses: '127'
+  };
+
+  const launchModule = (demographic) => {
+    setSelectedModule(demographic);
+    setTimeout(() => setSelectedModule(null), 2000);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -279,3 +367,4 @@ const CyberSafetyDashboard = () => {
 };
 
 export default CyberSafetyDashboard;
+export default Course;
