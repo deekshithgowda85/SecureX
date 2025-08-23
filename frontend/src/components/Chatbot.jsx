@@ -175,7 +175,7 @@ const FloatingChatbot = forwardRef((props, ref) => {
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-3 break-words ${
                     msg.sender === "user"
-                      ? "bg-black text-white rounded-br-md"
+                      ? "bg-white text-black border border-black rounded-br-md"
                       : "bg-white text-black rounded-bl-md shadow-sm border border-black"
                   }`}
                 >
