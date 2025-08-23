@@ -1,72 +1,83 @@
-// data.jsx
-// Cybersecurity threats data for ThreatsGuide
-import { ShieldAlert, Bug, Lock, ServerCrash, UserCheck, Database } from "lucide-react";
+// src/pages/data.js
+import { AlertTriangle, Bug, Lock, Zap, Shield, Clock } from "lucide-react";
 
 export const threatsData = [
   {
     id: 1,
     title: "Phishing Attacks",
-    description: "Phishing attacks use deceptive emails or websites to trick users into revealing sensitive information such as passwords or credit card numbers.",
+    description:
+      "Fraudulent attempts to obtain sensitive information by disguising as a trustworthy entity.",
+    icon: AlertTriangle,
+    link: "https://consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams",
     instructions: [
-      "Always verify the sender's email address.",
-      "Do not click on suspicious links or download attachments from unknown sources.",
-      "Use email filtering and anti-phishing tools."
-    ],
-    icon: ShieldAlert
+      "Do not click on suspicious links or attachments.",
+      "Verify email sender addresses carefully.",
+      "Enable multi-factor authentication."
+    ]
   },
   {
     id: 2,
     title: "Malware",
-    description: "Malware is malicious software designed to damage, disrupt, or gain unauthorized access to computer systems.",
+    description:
+      "Software designed to damage, disrupt, or gain unauthorized access to systems.",
+    icon: Bug,
+    link: "https://www.malwarebytes.com/malware",
     instructions: [
-      "Install and update antivirus software regularly.",
-      "Avoid downloading software from untrusted sources.",
-      "Keep your operating system and applications updated."
-    ],
-    icon: Bug
+      "Keep software and OS up-to-date.",
+      "Install antivirus programs.",
+      "Avoid downloading files from unknown sources."
+    ]
   },
   {
     id: 3,
     title: "Ransomware",
-    description: "Ransomware encrypts a victim's files and demands payment for the decryption key.",
+    description:
+      "A type of malware that locks your files and demands a ransom to restore access.",
+    icon: Lock,
+    link: "https://www.cisa.gov/stopransomware/ransomware-guide",
     instructions: [
       "Regularly back up important data.",
-      "Do not pay the ransom; instead, contact authorities.",
-      "Educate users about suspicious emails and attachments."
-    ],
-    icon: Lock
+      "Do not pay ransom; contact authorities.",
+      "Use security software to prevent infections."
+    ]
   },
   {
     id: 4,
     title: "DDoS Attacks",
-    description: "Distributed Denial of Service (DDoS) attacks overwhelm a system with traffic, making it unavailable to users.",
+    description:
+      "Distributed Denial of Service attacks overwhelm servers, making them unavailable to users.",
+    icon: Zap,
+    link: "https://www.cloudflare.com/learning/ddos/how-to-prevent-ddos-attacks/",
     instructions: [
-      "Use DDoS protection services.",
-      "Monitor network traffic for unusual spikes.",
-      "Have an incident response plan in place."
-    ],
-    icon: ServerCrash
+      "Use firewalls and DDoS protection services.",
+      "Monitor traffic for unusual spikes.",
+      "Have a mitigation plan in place."
+    ]
   },
   {
     id: 5,
-    title: "Man-in-the-Middle (MITM) Attacks",
-    description: "MITM attacks intercept and alter communication between two parties without their knowledge.",
+    title: "Data Breaches",
+    description:
+      "Unauthorized access and theft of sensitive data from organizations or individuals.",
+    icon: Shield,
+    link: "https://www.fortinet.com/resources/cyberglossary/data-breach",
     instructions: [
-      "Use encrypted connections (HTTPS, VPN).",
-      "Avoid using public Wi-Fi for sensitive transactions.",
-      "Enable two-factor authentication."
-    ],
-    icon: UserCheck
+      "Encrypt sensitive information.",
+      "Use strong, unique passwords.",
+      "Regularly audit and monitor data access."
+    ]
   },
   {
     id: 6,
-    title: "SQL Injection",
-    description: "SQL injection exploits vulnerabilities in applications to execute malicious SQL statements.",
+    title: "Insider Threats",
+    description:
+      "Threats originating from within an organization by employees or contractors.",
+    icon: Clock,
+    link: "https://www.cisa.gov/resources-tools/resources/insider-threat-mitigation-guide",
     instructions: [
-      "Use parameterized queries and prepared statements.",
-      "Validate and sanitize all user inputs.",
-      "Regularly test and update your code for vulnerabilities."
-    ],
-    icon: Database
+      "Implement strict access controls.",
+      "Monitor employee activity for suspicious behavior.",
+      "Conduct regular security training."
+    ]
   }
 ];

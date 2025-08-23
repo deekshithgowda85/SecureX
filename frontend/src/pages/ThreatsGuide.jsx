@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { threatsData } from "./data";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import NewsNavbar from "../components/NewsNavbar";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -13,29 +14,13 @@ const cardVariants = {
   })
 };
 
-// Modal animation
-const modalVariants = {
-  hidden: { scale: 0.9, opacity: 0 },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    transition: { duration: 0.3, ease: "easeOut" }
-  },
-  exit: {
-    scale: 0.9,
-    opacity: 0,
-    transition: { duration: 0.2, ease: "easeIn" }
-  }
-};
-
 const ThreatsGuide = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [selectedThreat, setSelectedThreat] = useState(null);
+  const navigate = useNavigate();
 
   const toggleDarkMode = () => setIsDarkMode((v) => !v);
 
-  // Theme classes
   const themeClasses = {
     mainBg: isDarkMode ? "bg-black" : "bg-white",
     cardBg: isDarkMode ? "bg-gray-900" : "bg-white",
@@ -52,22 +37,18 @@ const ThreatsGuide = () => {
   };
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${themeClasses.mainBg} ${themeClasses.mainText}`}
-    >
+    <div className={`min-h-screen transition-colors duration-300 ${themeClasses.mainBg} ${themeClasses.mainText}`}>
       <NewsNavbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
-        iconColor={isDarkMode ? "text-white" : "text-black"}
-        textColor={isDarkMode ? "text-white" : "text-black"}
+        iconColor={themeClasses.iconColor}
+        textColor={themeClasses.mainText}
       />
 
       <div className="py-10 px-4">
-        <h1
-          className={`text-3xl md:text-4xl font-bold text-center mb-8 ${themeClasses.mainText}`}
-        >
+        <h1 className={`text-3xl md:text-4xl font-bold text-center mb-8 ${themeClasses.mainText}`}>
           Major Cybersecurity Threats
         </h1>
 
@@ -83,33 +64,29 @@ const ThreatsGuide = () => {
                 animate="visible"
                 variants={cardVariants}
               >
-                {/* Icon */}
                 <div className={`mb-4 ${themeClasses.iconColor}`}>
                   <Icon size={40} />
                 </div>
 
-                {/* Title */}
-                <h2
-                  className={`text-xl font-semibold mb-2 text-center ${themeClasses.cardText}`}
-                >
+                <h2 className={`text-xl font-semibold mb-2 text-center ${themeClasses.cardText}`}>
                   {threat.title}
                 </h2>
 
-                {/* Description */}
                 <p className={`text-center mb-4 ${themeClasses.descriptionText}`}>
                   {threat.description}
                 </p>
 
-                {/* Modal Button */}
                 <button
                   className={`mt-auto px-6 py-3 rounded-lg font-medium transition-all duration-300 border-2 ${themeClasses.buttonBg} ${themeClasses.buttonText} ${themeClasses.buttonHover} ${
                     isDarkMode
                       ? "border-white hover:border-gray-300"
                       : "border-black hover:border-gray-600"
                   }`}
-                  onClick={() => setSelectedThreat(threat)}
+                   
                 >
+                  <a   target="_blank" href={threat.link}>
                   View Details
+                  </a>
                 </button>
               </motion.div>
             );
@@ -117,56 +94,7 @@ const ThreatsGuide = () => {
         </div>
       </div>
 
-      {/* Modal */}
-      <AnimatePresence>
-        {selectedThreat && (
-          <motion.div
-            className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              className={`max-w-lg w-full rounded-2xl shadow-2xl p-6 relative ${
-                isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
-              }`}
-              variants={modalVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setSelectedThreat(null)}
-                className="absolute top-3 right-3 text-xl font-bold"
-              >
-                ✖
-              </button>
-
-              {/* Title */}
-              <h2 className="text-2xl font-semibold mb-4 text-center">
-                {selectedThreat.title}
-              </h2>
-
-              {/* Description */}
-              <p className="mb-4">{selectedThreat.description}</p>
-
-              {/* Guidelines */}
-              <h3 className="font-semibold mb-3">Protection Guidelines:</h3>
-              <ul className="list-disc list-inside space-y-2">
-                {selectedThreat.instructions.map((item, idx) => (
-                  <li key={idx} className="leading-relaxed">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <Footer/>
+      <Footer />
     </div>
   );
 };
