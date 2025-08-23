@@ -19,20 +19,20 @@ const NewsNavbar = ({
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/news" className="flex items-center space-x-3 group">
-            <Shield className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-transform" />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent group-hover:underline">
+            <Shield className={`w-8 h-8 transition-transform ${isDarkMode ? 'text-white' : 'text-black'} group-hover:scale-110`} />
+            <span className={`text-xl font-bold transition-colors group-hover:underline ${isDarkMode ? 'text-white' : 'text-black'}`}>
               SecureX
             </span>
           </Link>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link to="/guide" className={`hover:text-blue-500 transition-colors ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            <Link to="/guide" className={`hover:text-gray-900 transition-colors ${
+              isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
             }`}>
               Guide
             </Link>
-            <Link to="/news" className={`hover:text-blue-500 transition-colors ${
-              isDarkMode ? 'text-gray-300' : 'text-gray-600'
+            <Link to="/news" className={`hover:text-gray-900 transition-colors ${
+              isDarkMode ? 'text-gray-300 hover:text-white' : 'text-gray-600 hover:text-black'
             }`}>
               News
             </Link>
@@ -42,8 +42,8 @@ const NewsNavbar = ({
               onClick={toggleDarkMode}
               className={`p-2 rounded-lg transition-colors ${
                 isDarkMode 
-                  ? 'bg-gray-800 text-yellow-400 hover:bg-gray-700' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-gray-800 text-white hover:bg-gray-700' 
+                  : 'bg-gray-100 text-black hover:bg-gray-200'
               }`}
             >
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -77,14 +77,14 @@ const NewsNavbar = ({
           isDarkMode ? 'border-gray-700 bg-gray-900' : 'border-gray-200 bg-white'
         }`}>
           <div className="px-4 py-3 space-y-3">
-            <Link to="/guide" className="block py-2">Guide</Link>
-            <Link to="/news" className="block py-2">News</Link>
+            <Link to="/guide" className={`block py-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>Guide</Link>
+            <Link to="/news" className={`block py-2 ${isDarkMode ? 'text-white' : 'text-black'}`}>News</Link>
             <div className="flex items-center justify-between py-2">
-              <span>Dark Mode</span>
+              <span className={isDarkMode ? 'text-white' : 'text-black'}>Dark Mode</span>
               <button
                 onClick={toggleDarkMode}
                 className={`p-2 rounded-lg ${
-                  isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
+                  isDarkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'
                 }`}
               >
                 {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
