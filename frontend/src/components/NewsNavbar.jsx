@@ -8,7 +8,8 @@ const navItems = [
   { label: 'Products', href: '/products' },
   { label: 'Courses', href: '/course' },
   { label: 'News', href: '/news' },
-  { label: 'Guide', href: '/guide' }
+  { label: 'Guide', href: '/guide' },
+  {label: 'Cyber Learning', href: '/cyberLearning'},
 ];
 
 const dropdownItems = [

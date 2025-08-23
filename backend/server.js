@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import News from "./models/news.js";
-
+import aiRoutes from "./routes/aiRoutes.js"
 dotenv.config();
 const app = express();
 const PORT = 5000;
@@ -62,6 +62,7 @@ app.get("/api/cyber-news", async (req, res) => {
 // 🔹 Schedule periodic refresh
 setInterval(fetchAndStoreNews, REFRESH_INTERVAL_MIN * 60 * 1000);
 
+app.use("/ai",aiRoutes);
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
