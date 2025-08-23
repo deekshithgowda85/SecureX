@@ -4,12 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 
 const navItems = [
-  { label: 'Dashboard', href: '/home' },
+  { label: 'Home', href: '/home' },
   { label: 'Products', href: '/products' },
-  { label: 'Courses', href: '/course' },
+  { label: 'Dashboard', href: '/course' },
   { label: 'News', href: '/news' },
   { label: 'Guide', href: '/guide' },
-  {label: 'Cyber Learning', href: '/cyberLearning'},
+  {label: 'Quiz', href: '/cyberLearning'},
 ];
 
 const dropdownItems = [
