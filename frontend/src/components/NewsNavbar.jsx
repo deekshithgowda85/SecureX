@@ -61,8 +61,15 @@ const NewsNavbar = ({
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/home" className="flex items-center space-x-3 group">
-            <Shield className="w-8 h-8 transition-transform text-black group-hover:scale-110" />
-            <span className="text-xl font-bold transition-colors group-hover:underline text-black">
+            <Shield
+              className="w-8 h-8 transition-transform group-hover:scale-110"
+              stroke={isDarkMode ? "#fff" : "#000"} // This line ensures icon color changes
+            />
+            <span
+              className={`text-xl font-bold transition-colors group-hover:underline ${
+                isDarkMode ? "text-white" : "text-black"
+              }`}
+            >
               SecureX
             </span>
           </Link>

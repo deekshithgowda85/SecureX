@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'; // <-- Add this import
+import { useNavigate } from 'react-router-dom';
 import NewsNavbar from '../../components/NewsNavbar';
 import CybersecurityTradingHero from '../../components/Homelanding';
 import CircularGallery from '../../components/Components/CircularGallery/CircularGallery';
+import Footer from '../../components/Footer';
 import { Check, ArrowRight, Shield, Lock, Users, Globe } from 'lucide-react';
 import firewallImg from '../../assets/img1.jpg';
 import threatImg from '../../assets/img2.jpeg';
@@ -14,7 +15,6 @@ import vulnerabilityImg from '../../assets/img7.jpeg';
 import phishingImg from '../../assets/img8.jpeg';
 import siemImg from '../../assets/img9.jpeg';
 import encryptionImg from '../../assets/img10.jpeg';
-import Footer from '../../components/Footer';
 
 const galleryItems = [
   { image: firewallImg, text: 'Firewall Protection' },
@@ -29,13 +29,13 @@ const galleryItems = [
   { image: siemImg, text: 'SIEM Integration' },
 ];
 
-const Home = () => {
+const Home = ({ isDarkMode, toggleDarkMode }) => {
   const leftCardRef = useRef(null);
   const rightCardRef = useRef(null);
   const bottomLeftCardRef = useRef(null);
   const bottomRightCardsRef = useRef(null);
   const floatingElementsRef = useRef([]);
-  const navigate = useNavigate(); // <-- Add this line
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Import GSAP
@@ -187,13 +187,29 @@ const Home = () => {
     };
   }, []);
 
+  // Theme-based classes
+  const bgMain = isDarkMode ? "bg-[#0a101a]" : "bg-white";
+  const textMain = isDarkMode ? "text-white" : "text-black";
+  const accent = isDarkMode ? "text-cyan-400" : "text-cyan-600";
+  const cardBg = isDarkMode ? "bg-[#151c28]/95" : "bg-white/95";
+  const cardBorder = isDarkMode ? "border-cyan-900/30" : "border-cyan-400/30";
+  const cardShadow = isDarkMode
+    ? "shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5),0_0_30px_rgba(6,182,212,0.08)]"
+    : "shadow-2xl";
+
   return (
     <>
-      <NewsNavbar />
+      <NewsNavbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       {/* Animated/3D card hero section */}
-      <div className="min-h-screen bg-white text-black relative overflow-hidden" style={{ perspective: '1200px' }}>
+      <div
+        className={`min-h-screen ${bgMain} ${textMain} relative overflow-hidden`}
+        style={{ perspective: '1200px', marginTop: '-16px' }} // Reduce gap between navbar and hero
+      >
         {/* Background gradient effects */}
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/40 via-white to-white"></div>
+        <div className={`absolute inset-0 ${isDarkMode
+          ? "bg-gradient-to-br from-cyan-900/40 via-[#0a101a] to-[#0a101a]"
+          : "bg-gradient-to-br from-cyan-100/40 via-white to-white"
+        }`}></div>
         <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
         <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-100/10 rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"></div>
@@ -207,7 +223,7 @@ const Home = () => {
             transform: 'rotateX(15deg) rotateY(25deg) rotateZ(12deg)'
           }}
         >
-          <div className="w-full h-full bg-white/95 rounded-xl border border-cyan-400/30 backdrop-blur-md shadow-2xl" style={{
+          <div className={`w-full h-full ${cardBg} rounded-xl ${cardBorder} backdrop-blur-md ${cardShadow}`} style={{
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 30px rgba(6, 182, 212, 0.08)'
           }}>
             <div className="p-6">
@@ -217,7 +233,7 @@ const Home = () => {
               </div>
               <div className="mb-8">
                 <div className="text-3xl font-bold text-black">Level 9</div>
-                <div className="text-cyan-600 text-sm">Security Status: SECURE</div>
+                <div className={`${accent} text-sm`}>Security Status: SECURE</div>
               </div>
               <div className="h-40 bg-gray-100 rounded-lg mb-6 relative overflow-hidden border border-cyan-400/20">
                 <div className="absolute inset-0 bg-gradient-to-t from-cyan-200/10 to-transparent"></div>
@@ -260,7 +276,7 @@ const Home = () => {
             transform: 'rotateX(-15deg) rotateY(-20deg) rotateZ(-8deg)'
           }}
         >
-          <div className="w-full h-full bg-white/95 rounded-xl border border-cyan-400/30 backdrop-blur-md shadow-2xl" style={{
+          <div className={`w-full h-full ${cardBg} rounded-xl ${cardBorder} backdrop-blur-md ${cardShadow}`} style={{
             boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 30px rgba(6, 182, 212, 0.08)'
           }}>
             <div className="p-5">
@@ -313,7 +329,7 @@ const Home = () => {
             transform: 'rotateX(8deg) rotateY(15deg) rotateZ(6deg)'
           }}
         >
-          <div className="w-full h-full bg-white/95 rounded-xl border border-cyan-400/30 backdrop-blur-md shadow-2xl" style={{
+          <div className={`w-full h-full ${cardBg} rounded-xl ${cardBorder} backdrop-blur-md ${cardShadow}`} style={{
             boxShadow: '0 20px 40px -12px rgba(0, 0, 0, 0.07), 0 0 20px rgba(6, 182, 212, 0.08)'
           }}>
             <div className="p-4">
@@ -422,27 +438,27 @@ const Home = () => {
 
         {/* Main Content (Heading, Subtitle, CTA) */}
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center pointer-events-none">
-          <div className="text-cyan-600 text-sm mb-4 tracking-wider opacity-80 pointer-events-auto">
+          <div className={`${accent} text-sm mb-4 tracking-wider opacity-80 pointer-events-auto`}>
             Advanced Cyber Defense • Elite Training
           </div>
           <h1 className="text-5xl md:text-7xl font-bold text-center mb-8 leading-tight pointer-events-auto">
-            <div className="text-black">CyberDefense Academy</div>
-            <div className="text-cyan-600 bg-gradient-to-r from-cyan-600 to-blue-400 bg-clip-text text-transparent">
+            <div className={textMain}>CyberDefense Academy</div>
+            <div className={`${accent} bg-gradient-to-r from-cyan-600 to-blue-400 bg-clip-text text-transparent`}>
               Master Digital Security
             </div>
           </h1>
-          <p className="text-black text-lg mb-8 text-center max-w-2xl leading-relaxed pointer-events-auto">
+          <p className={`${textMain} text-lg mb-8 text-center max-w-2xl leading-relaxed pointer-events-auto`}>
             Join elite cybersecurity professionals in advanced threat detection and digital defense strategies
           </p>
-          <div className="flex items-center space-x-4 mb-12 pointer-events-auto">
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mb-12 pointer-events-auto w-full md:w-auto px-4">
             <button
-              className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+              className="w-full md:w-auto bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
               onClick={() => navigate('/quiz')}
             >
               Start Training
             </button>
             <button
-              className="bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
+              className="w-full md:w-auto bg-black hover:bg-gray-900 text-white px-8 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 shadow-lg"
               onClick={() => navigate('/dashboard')}
             >
               Explore
@@ -464,13 +480,13 @@ const Home = () => {
       {/* Homelanding section below */}
       <CybersecurityTradingHero />
       {/* Circular Gallery below Homelanding */}
-      <div className="w-full bg-white py-24 flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-black mb-8">Security and Safety</h2>
-        <div className="w-screen max-w-none h-[480px] px-0 mx-0">
+      <div className={`w-full ${bgMain} py-24 flex flex-col items-center`}>
+        <h2 className={`text-3xl font-bold ${textMain} mb-8`}>Security and Safety</h2>
+        <div className="w-full md:w-screen max-w-none h-[380px] md:h-[480px] px-0 mx-0">
           <CircularGallery
             items={galleryItems}
             bend={3}
-            textColor="#111111"
+            textColor={isDarkMode ? "#f1f1f1" : "#111111"}
             borderRadius={0.05}
             font="bold 30px Figtree"
             scrollSpeed={2}
