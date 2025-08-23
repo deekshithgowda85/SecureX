@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import Navbar from '../../components/Navbar';
+import NewsNavbar from '../../components/NewsNavbar';
 
 const Home = () => {
   const leftCardRef = useRef(null);
@@ -160,7 +160,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <NewsNavbar/>
       <div className="min-h-screen bg-white text-black relative overflow-hidden" style={{ perspective: '1200px' }}>
         {/* Background gradient effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/40 via-white to-white"></div>

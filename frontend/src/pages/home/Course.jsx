@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../../components/Navbar';
+import NewsNavbar from '../../components/NewsNavbar';
 import { Shield, Users, BookOpen, TrendingUp, AlertTriangle, Play, BarChart3, Globe, Home as HomeIcon, Briefcase, GraduationCap, Heart, User } from 'lucide-react';
 
 const Course = () => {
@@ -92,7 +92,7 @@ const Course = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+    <NewsNavbar/>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Alert Banner */}
         <div className="mb-8 bg-red-50 border border-red-200 rounded-lg p-4">
